@@ -21,10 +21,10 @@
 </template>
 
 <script setup>
-import Card from "@/shared/ui/components/card.vue";
+import Card from "@/shared/ui/components/Card.vue";
 import AuthHeader from "../components/AuthHeader.vue";
 import AuthForm from "../components/AuthForm.vue";
-import Checkbox from "@/shared/ui/components/checkbox.vue";
+import Checkbox from "@/shared/ui/components/CheckBox.vue";
 import { ROUTES } from "../../../constants/routes.js";
 import bank from "@/shared/assets/icons/bank.svg";
 import { ref } from "vue";

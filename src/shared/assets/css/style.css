@@ -10,9 +10,10 @@
   --background-color-card: #ffffff;
   --background-color-link: #EFF4FF;
   --background-gradient-primary: linear-gradient(to bottom right, #0f172a, #1e293b, #10b981);
+  --background-color-muted: #fbfcff;
 
   --border-color-variant: #c6c6cd4d;
-  --border-color-input: #c6c6cd;
+  --border-color-input: #ececf1;
 
   --font-sans: "Inter", sans-serif;
    --background-image-gradient-surface:
@@ -35,4 +36,5 @@ body {
 
 button {
   cursor: pointer;
+
 }

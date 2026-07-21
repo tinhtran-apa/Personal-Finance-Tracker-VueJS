@@ -6,7 +6,7 @@
           <Label :for="form.id">{{ form.title }}</Label>
         </div>
         <div class="relative">
-          <Input :id="form.id" :type="form.type" :placeholder="form.placeholder" class="w-full" />
+          <Input :id="form.id" :type="form.type" :placeholder="form.placeholder" />
         </div>
       </div>
     </template>
@@ -16,9 +16,9 @@
 </template>
 
 <script setup>
-import Button from "@/shared/ui/components/button.vue";
-import Input from "@/shared/ui/components/input.vue";
-import Label from "@/shared/ui/components/label.vue";
+import Button from "@/shared/ui/components/Button.vue";
+import Input from "@/shared/ui/components/Input.vue";
+import Label from "@/shared/ui/components/Label.vue";
 
 const props = defineProps({
   forms: {
@@ -27,7 +27,7 @@ const props = defineProps({
   },
   submit: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 </script>
