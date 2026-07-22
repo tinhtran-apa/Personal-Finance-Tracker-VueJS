@@ -1,9 +1,13 @@
 <template>
   <aside class="min-h-screen w-full max-w-64 border-r border-input shadow-sm py-8 bg-card sticky top-0 shrink-0">
-    <div class="px-7 mb-8">
-      <h1 class="text-2xl leading-7 font-semibold">FinTrack Pre</h1>
+    <div class="px-2 mb-8 flex gap-4 items-center">
+      <img :src="finTrack" alt="" />
 
-      <span class="text-sm">Reliable Wealth Management</span>
+      <div>
+        <h1 class="text-2xl leading-7 font-semibold">FinTrack Pre</h1>
+
+        <span class="text-xs ">Reliable Wealth Management</span>
+      </div>
     </div>
     <div class="flex flex-col gap-2 px-2">
       <RouterLink :to="head.path" v-for="head in heads" :key="head" :class="checkPathDesktop(head.path)">
@@ -20,6 +24,7 @@ import transaction from "@/shared/assets/icons/transaction.svg";
 import category from "@/shared/assets/icons/category.svg";
 import dashboard from "@/shared/assets/icons/dashboard.svg";
 import { useRoute } from "vue-router";
+import finTrack from "@/shared/assets/icons/fintrack.svg";
 
 const heads = [
   {

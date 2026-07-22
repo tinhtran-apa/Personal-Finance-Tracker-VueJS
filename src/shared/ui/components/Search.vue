@@ -17,5 +17,10 @@ defineOptions({
   inheritAttrs: false,
 });
 
+const model = defineModel({
+  type: [String, Number],
+  default: "",
+});
+
 const attrs = useAttrs();
 </script>

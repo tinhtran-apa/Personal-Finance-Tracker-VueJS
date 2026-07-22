@@ -31,11 +31,19 @@
         </TableCell>
 
         <TableCell>
-          <img
-            class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-neutral-50"
-            :src="ellipis"
-            alt=""
-          />
+          <div class="flex items-center gap-2">
+            <img
+              class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-neutral-50 transition-all active:scale-75 cursor-pointer"
+              :src="ellipis"
+              alt=""
+            />
+            <img
+              class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-red-50 transition-all active:scale-75 cursor-pointer"
+              :src="trash"
+              alt=""
+              @click="emit('open-dialog')"
+            />
+          </div>
         </TableCell>
       </TableRow>
     </TableBody>
@@ -46,17 +54,21 @@
             <p class="text-neutral text-xs flex items-center">Showing 1 to 10 of 42 result</p>
 
             <div class="flex gap-1">
-              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-neutral-200"><img :src="chevronLeft" alt="" /></Button>
+              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
+                ><img :src="chevronLeft" alt=""
+              /></Button>
 
-              <Button class="py-2 px-2  shadow-none rounded-xl hover:bg-neutral-200 bg-primary text-white">1</Button>
+              <Button class="py-2 px-2 shadow-none rounded-xl hover:bg-link bg-primary text-white">1</Button>
 
-              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-neutral-200">2</Button>
+              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link">2</Button>
 
-              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-neutral-200">3</Button>
+              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link">3</Button>
 
               <span class="flex items-center">...</span>
-              
-              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-neutral-200"><img :src="chevronRight" alt="" /></Button>
+
+              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
+                ><img :src="chevronRight" alt=""
+              /></Button>
             </div>
           </div>
         </TableCell>
@@ -77,6 +89,7 @@ import {
 } from "@/shared/ui/components/table/index";
 import arrowDown from "@/shared/assets/icons/arrow-down.svg";
 import ellipis from "@/shared/assets/icons/ellipis.svg";
+import trash from "@/shared/assets/icons/trash.svg";
 import chevronLeft from "@/shared/assets/icons/chevron-left.svg";
 import chevronRight from "@/shared/assets/icons/chevron-right.svg";
 import Button from "@/shared/ui/components/Button.vue";
@@ -86,4 +99,6 @@ const props = defineProps({
     default: () => [],
   },
 });
+const emit = defineEmits(['open-dialog'])
+
 </script>
