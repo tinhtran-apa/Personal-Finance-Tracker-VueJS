@@ -1,29 +1,15 @@
 <template>
-  <div class="flex justify-between">
-    <div>
-      <h1 class="text-5xl font-semibold">Categories</h1>
-
-      <p class="text-neutral mt-2">Manage and organize your spending categories.</p>
-    </div>
-
-    <div class="my-auto">
-      <Button @click="openOrCloseDialogCreateEdit" class="w-fit bg-primary text-white">
-        <img :src="plus" alt="" />
-        Create Category
-      </Button>
-    </div>
-  </div>
-  <div class="flex gap-3 pt-4">
-    <Search class="w-2xl" placeholder="Search transactions..." />
-
-    <div class="flex gap-3">
-      <Select title="Type" :options="optionsType" />
-    </div>
-  </div>
+  <CategoryHead
+    @open-dialog-create="openOrCloseDialogCreateEdit"
+    @search-category="searchCategory"
+    @filter-category-type="filterCategoryType"
+    :optionsType="optionsType"
+    v-model="type"
+  />
 
   <div class="pt-10">
     <ListCategory
-      :categories="categories"
+      :categories="categoriesFilter"
       @open-dialog-delete="openDialogDelete"
       @open-dialog-edit="openDialogEditCategory"
     />
@@ -41,10 +27,6 @@
 </template>
 
 <script setup>
-import plus from "@/shared/assets/icons/plus.svg";
-import Button from "@/shared/ui/components/Button.vue";
-import Search from "@/shared/ui/components/Search.vue";
-import Select from "@/shared/ui/components/Select.vue";
 import ListCategory from "../components/ListCategory.vue";
 import DialogFormCategory from "../components/DialogFormCategory.vue";
 import { onMounted, reactive, ref } from "vue";
@@ -52,14 +34,17 @@ import DialogDeleteCategory from "../components/DialogDeleteCategory.vue";
 import { createCategories, deleteCategories, getCatagroies, updateCategories } from "../services/category.service.js";
 import { getTransactions } from "@/modules/Transaction/services/api/transaction.service.js";
 import { toast } from "vue3-toastify";
+import CategoryHead from "../components/CategoryHead.vue";
 
 const optionsType = [
   { label: "Income", value: "INCOME" },
   { label: "Expense", value: "EXPENSE" },
 ];
 
+const type = ref("");
 const title = ref("Create category");
 const categories = ref([]);
+const categoriesFilter = ref([]);
 const transactions = ref([]);
 const isOpen = ref(false);
 const isOpenDelete = ref(false);
@@ -136,11 +121,34 @@ const handleCategories = async () => {
   }
 };
 
+const searchCategory = (event) => {
+  if (event.target.value) {
+    const newData = categories.value.filter((items) => {
+      if (!type.value) {
+        return items.name.toLowerCase().includes(event.target.value.toLowerCase());
+      }
+      return items.name.toLowerCase().includes(event.target.value.toLowerCase()) && items.type === type.value;
+    });
+    categoriesFilter.value = newData;
+  } else {
+    categoriesFilter.value = categories.value;
+  }
+};
+
+const filterCategoryType = () => {
+  if (!type.value) {
+    categoriesFilter.value = categories.value;
+    return;
+  }
+  categoriesFilter.value = categories.value.filter((items) => items.type === type.value);
+};
+
 const fetchCategories = async () => {
   try {
     const response = await getCatagroies();
 
     categories.value = response.data;
+    categoriesFilter.value = response.data;
   } catch (error) {
     console.log(error);
   }

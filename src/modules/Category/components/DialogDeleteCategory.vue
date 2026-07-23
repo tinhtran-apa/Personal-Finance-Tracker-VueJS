@@ -27,5 +27,5 @@ defineProps({
   },
 });
 
-const emit = defineEmits(["close-dialog", "submit"]);
+const emit = defineEmits(["close-dialog-delete", "submit"]);
 </script>

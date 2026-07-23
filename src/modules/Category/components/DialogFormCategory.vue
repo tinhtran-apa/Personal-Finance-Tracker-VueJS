@@ -24,8 +24,7 @@
           <div class="flex rounded-md bg-link p-1 gap-2">
             <Button
               @click="forms.type = 'EXPENSE'"
-              :class="forms.type === 'EXPENSE' ? 'bg-white shadow' : 'bg-neutral-200'"
-              class="flex-1 rounded-md py-2"
+              :class="checkClassExpense(forms.type)"
               type="button"
             >
               Expense
@@ -33,8 +32,7 @@
 
             <Button
               @click="forms.type = 'INCOME'"
-              :class="forms.type === 'INCOME' ? 'bg-white shadow' : 'bg-neutral-200'"
-              class="flex-1 rounded-md py-2"
+              :class="checkClassIncome(forms.type)"
               type="button"
             >
               Income
@@ -43,7 +41,7 @@
         </div>
       </DialogContent>
       <DialogFooter>
-        <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
+        <Button @click="emit('close-dialog-delete')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
         <Button class="w-fit bg-primary text-white">Confirm</Button>
       </DialogFooter>
     </form>
@@ -55,7 +53,6 @@ import Button from "@/shared/ui/components/Button.vue";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@/shared/ui/components/dialog";
 import Input from "@/shared/ui/components/Input.vue";
 import Label from "@/shared/ui/components/Label.vue";
-import { ref, watch, watchEffect } from "vue";
 import stack from "@/shared/assets/icons/stack.svg";
 
 const props = defineProps({
@@ -75,4 +72,12 @@ const forms = defineModel({
 });
 
 const emit = defineEmits(["close-dialog", "submit"]);
+
+const checkClassIncome = (field) => {
+  return ['flex-1 rounded-md py-2 ', field === 'INCOME' ? 'bg-white shadow' : 'bg-neutral-200']
+}  
+
+const checkClassExpense = (field) => {
+  return ['flex-1 rounded-md py-2 ', field === 'EXPENSE' ? 'bg-white shadow' : 'bg-neutral-200']
+}  
 </script>

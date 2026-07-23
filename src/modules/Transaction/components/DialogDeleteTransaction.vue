@@ -4,12 +4,12 @@
       <h2 class="text-2xl">Delete transaction</h2>
     </DialogHeader>
 
-    <form>
+    <form @submit.prevent="emit('submit')">
       <DialogContent>
         <p class="text-red-500 text-sm">Are you sure to delete this transaction !!!</p>
       </DialogContent>
       <DialogFooter>
-        <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
+        <Button @click="emit('close-dialog-delete')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
         <Button class="w-fit bg-red-400 text-white">Confirm</Button>
       </DialogFooter>
     </form>
@@ -27,5 +27,5 @@ defineProps({
   },
 });
 
-const emit = defineEmits(["close-dialog"]);
+const emit = defineEmits(["close-dialog-delete","submit"]);
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-3 gap-4">
-    <Card v-for="category in props.categories" class="p-3 group">
+    <Card v-for="category in props.categories" class="p-3 group hover:scale-95 duration-200 cursor-pointer">
       <div class="flex justify-between">
         <div class="rounded-full bg-link p-3">
           <img :src="food" alt="" />

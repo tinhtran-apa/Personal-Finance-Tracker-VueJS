@@ -7,41 +7,51 @@
     </TableHeader>
 
     <TableBody>
-      <TableRow class="group">
+      <TableRow v-for="transaction in props.transactions" class="group">
         <TableCell
           ><div class="flex flex-col gap-1">
-            <span>Oct 24, 2023</span>
-            <span class="text-gray-400 text-xs">09:41 AM</span>
+            <span>{{ formatDate(transaction.transactionDate) }}</span>
+            <span class="text-gray-400 text-xs">{{ formatTime(transaction.createdAt) }}</span>
           </div>
         </TableCell>
 
         <TableCell
-          ><span class="break-words">spassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</span></TableCell
+          ><span class="break-words">{{ transaction.description }}</span></TableCell
         >
 
-        <TableCell><span class="bg-gray-200 px-2 py-1 rounded-full font-semibold">Food</span></TableCell>
+        <TableCell
+          ><span class="bg-gray-200 px-2 py-1 rounded-full font-semibold">{{
+            transaction.categoryName
+          }}</span></TableCell
+        >
 
-        <TableCell><span class="font-semibold text-secondary">+ 10,000$</span></TableCell>
+        <TableCell
+          ><span :class="checkClassAmount(transaction.type)"
+            >{{ checkCalAmount(transaction.type) + " " + transaction.amount }} $</span
+          ></TableCell
+        >
 
         <TableCell>
-          <div class="inline-flex gap-1 text-secondary rounded-full bg-green-100 py-1 px-2 font-semibold">
-            <img :src="arrowDown" alt="" />
-            <span>Income</span>
+          <div :class="checkClassType(transaction.type)">
+            <img :src="checkIconType(transaction.type)" alt="" />
+
+            <span>{{ transaction.type }}</span>
           </div>
         </TableCell>
 
         <TableCell>
           <div class="flex items-center gap-2">
             <img
+              @click="emit('open-dialog-edit', transaction)"
               class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-neutral-50 transition-all active:scale-75 cursor-pointer"
               :src="ellipis"
               alt=""
             />
             <img
+              @click="emit('open-dialog-delete', transaction.id)"
               class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-red-50 transition-all active:scale-75 cursor-pointer"
               :src="trash"
               alt=""
-              @click="emit('open-dialog')"
             />
           </div>
         </TableCell>
@@ -88,17 +98,42 @@ import {
   TableRow,
 } from "@/shared/ui/components/table/index";
 import arrowDown from "@/shared/assets/icons/arrow-down.svg";
+import arrowUp from "@/shared/assets/icons/arrow-up.svg";
 import ellipis from "@/shared/assets/icons/ellipis.svg";
 import trash from "@/shared/assets/icons/trash.svg";
 import chevronLeft from "@/shared/assets/icons/chevron-left.svg";
 import chevronRight from "@/shared/assets/icons/chevron-right.svg";
 import Button from "@/shared/ui/components/Button.vue";
+import { formatDate } from "@/shared/utils/formatDate";
+import { formatTime } from "@/shared/utils/formatTime";
 const props = defineProps({
   heads: {
     type: Array,
     default: () => [],
   },
+  transactions: {
+    type: Array,
+    default: () => [],
+  },
 });
-const emit = defineEmits(['open-dialog'])
+const emit = defineEmits(["open-dialog-edit", "open-dialog-delete"]);
 
+const checkIconType = (field) => {
+  return field === "EXPENSE" ? arrowUp : arrowDown;
+};
+
+const checkClassType = (field) => {
+  return [
+    "flex justify-between rounded-full py-1 px-2 font-semibold w-fit",
+    field === "EXPENSE" ? "text-red-400 bg-red-100" : "text-secondary bg-green-100",
+  ];
+};
+
+const checkClassAmount = (field) => {
+  return ["font-semibold", field === "EXPENSE" ? "text-red-500" : "text-secondary"];
+};
+
+const checkCalAmount = (field) => {
+  return field === "EXPENSE" ? "-" : "+";
+};
 </script>
