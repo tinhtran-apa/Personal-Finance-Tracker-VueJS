@@ -1,29 +1,40 @@
 <template>
-  <CategoryHead
-    @open-dialog-create="openOrCloseDialogCreateEdit"
-    @search-category="searchCategory"
-    @filter-category-type="filterCategoryType"
-    :optionsType="optionsType"
-    v-model="type"
-  />
-
-  <div class="pt-10">
-    <ListCategory
-      :categories="categoriesFilter"
-      @open-dialog-delete="openDialogDelete"
-      @open-dialog-edit="openDialogEditCategory"
+  <section>
+    <CategoryHead
+      @open-dialog-create="openOrCloseDialogCreateEdit"
+      @search-category="searchCategory"
+      @filter-category-type="filterCategoryType"
+      :optionsType="optionsType"
+      v-model="type"
     />
-  </div>
 
-  <DialogFormCategory
-    :title="title"
-    :open="isOpen"
-    @close-dialog="openOrCloseDialogCreateEdit"
-    @submit="handleCategories"
-    v-model="forms"
-  />
+    <div class="pt-10">
+      <ListCategory
+        :categories="categoriesFilter"
+        :summaryAmount="summaryAmount"
+        :icons="CATEGORY_ICON"
+        @open-dialog-delete="openDialogDelete"
+        @open-dialog-edit="openDialogEditCategory"
+      />
+    </div>
 
-  <DialogDeleteCategory :open="isOpenDelete" @close-dialog="closeDialogDelete" @submit="deleteCategory" />
+    <DialogFormCategory
+      :title="title"
+      :open="isOpen"
+      @close-dialog="openOrCloseDialogCreateEdit"
+      @submit="handleCategories"
+      v-model="forms"
+      :loading="loading"
+      :icons="CATEGORY_ICON"
+    />
+
+    <DialogDeleteCategory
+      :open="isOpenDelete"
+      @close-dialog="closeDialogDelete"
+      @submit="deleteCategory"
+      :loading="loading"
+    />
+  </section>
 </template>
 
 <script setup>
@@ -31,10 +42,16 @@ import ListCategory from "../components/ListCategory.vue";
 import DialogFormCategory from "../components/DialogFormCategory.vue";
 import { onMounted, reactive, ref } from "vue";
 import DialogDeleteCategory from "../components/DialogDeleteCategory.vue";
-import { createCategories, deleteCategories, getCatagroies, updateCategories } from "../services/category.service.js";
-import { getTransactions } from "@/modules/Transaction/services/api/transaction.service.js";
+import {
+  createCategories,
+  deleteCategories,
+  getCatagroies,
+  updateCategories,
+} from "../services/api/category.service.js";
+import { getTransactions, summaryByCategories } from "@/modules/Transaction/services/api/transaction.service.js";
 import { toast } from "vue3-toastify";
 import CategoryHead from "../components/CategoryHead.vue";
+import { CATEGORY_ICON } from "@/shared/utils/shareIcon.js";
 
 const optionsType = [
   { label: "Income", value: "INCOME" },
@@ -46,6 +63,7 @@ const title = ref("Create category");
 const categories = ref([]);
 const categoriesFilter = ref([]);
 const transactions = ref([]);
+const summaryAmount = ref([]);
 const isOpen = ref(false);
 const isOpenDelete = ref(false);
 const loading = ref(false);
@@ -53,11 +71,13 @@ const id = ref(null);
 const forms = reactive({
   name: "",
   type: "EXPENSE",
+  icon: "",
 });
 
 const resetForm = () => {
   forms.name = "";
   forms.type = "EXPENSE";
+  forms.icon = "";
   id.value = null;
 };
 
@@ -82,6 +102,7 @@ const openDialogEditCategory = (category) => {
   id.value = category.id;
   forms.name = category.name;
   forms.type = category.type;
+  forms.icon = category.icon;
 };
 
 const deleteCategory = async () => {
@@ -104,6 +125,7 @@ const handleCategories = async () => {
     const payload = {
       name: forms.name,
       type: forms.type,
+      icon: forms.icon,
     };
     let response;
     if (id.value) {
@@ -163,8 +185,18 @@ const fetchTransactions = async () => {
   }
 };
 
+const fetchSummaryAmountTracsactions = async () => {
+  try {
+    const response = await summaryByCategories();
+    summaryAmount.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 onMounted(() => {
   fetchCategories();
   fetchTransactions();
+  fetchSummaryAmountTracsactions();
 });
 </script>

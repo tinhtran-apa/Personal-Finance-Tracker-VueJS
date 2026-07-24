@@ -1,62 +1,70 @@
 <template>
-  <div class="flex justify-between">
-    <div>
-      <h1 class="text-5xl font-semibold">Transactions</h1>
+  <div class="border-b pb-10 border-input">
+    <div class="flex justify-between">
+      <div>
+        <h1 class="text-5xl font-semibold">Transactions</h1>
 
-      <p class="text-neutral mt-2">Review and manage your financial activity.</p>
-    </div>
-
-    <div class="my-auto">
-      <Button @click="emit('open-dialog-create')" class="w-fit bg-primary text-white">
-        <img :src="plus" alt="" />
-
-        Create Transaction
-      </Button>
-    </div>
-  </div>
-
-  <div class="flex justify-between gap-3 pt-4">
-    <Search @input="emit('search-transaction', $event)" class="w-2xl" placeholder="Search transactions..." />
-
-    <div class="flex gap-3">
-      <div v-if="filter !== 'date'" class="flex items-center gap-2">
-        <Label>Choose: </Label>
-
-        <Select v-model="filterValue" :disabled="checkChoose" :class="{ 'bg-neutral-200': checkChoose }">
-          <option value="">All</option>
-
-          <option v-if="filter === 'type'" v-for="option in optionsType" :key="option" :value="option.value">
-            {{ option.label }}
-          </option>
-
-          <option v-if="filter === 'categoryId'" v-for="category in categories" :key="category" :value="category.id">
-            {{ category.name }}
-          </option>
-        </Select>
-      </div>
-      <div v-else class="flex gap-2 items-center">
-        <div class="flex gap-2 items-center">
-          <Label for="from">From:</Label>
-
-          <Input v-model="from" id="from" type="date" />
-        </div>
-        <div class="flex gap-2 items-center">
-          <Label for="to">To:</Label>
-
-          <Input v-model="to" id="to" type="date" />
-        </div>
+        <p class="text-neutral mt-2">Review and manage your financial activity.</p>
       </div>
 
-      <div class="flex items-center gap-2">
-        <Label>Filter: </Label>
+      <div class="my-auto">
+        <Button @click="emit('open-dialog-create')" class="w-fit bg-primary text-white">
+          <img :src="plus" alt="" />
 
-        <Select v-model="filter">
-          <option value="">All</option>
+          Create Transaction
+        </Button>
+      </div>
+    </div>
 
-          <option v-for="option in optionsFilter" :value="option.value">
-            {{ option.label }}
-          </option>
-        </Select>
+    <div class="flex justify-between gap-3 pt-4">
+      <Search
+        :disabled="allowInput"
+        @input="emit('search-transaction', $event.target.value)"
+        class="w-2xl"
+        :class="{ 'bg-neutral-200': allowInput }"
+        placeholder="Search transactions..."
+      />
+
+      <div class="flex gap-3">
+        <div v-if="filter !== 'date'" class="flex items-center gap-2">
+          <Label>Choose: </Label>
+
+          <Select v-model="filterValue" :disabled="checkChoose" :class="{ 'bg-neutral-200': checkChoose }">
+            <option value="">All</option>
+
+            <option v-if="filter === 'type'" v-for="option in optionsType" :key="option" :value="option.value">
+              {{ option.label }}
+            </option>
+
+            <option v-if="filter === 'categoryId'" v-for="category in categories" :key="category" :value="category.id">
+              {{ category.name }}
+            </option>
+          </Select>
+        </div>
+        <div v-else class="flex gap-2 items-center">
+          <div class="flex gap-2 items-center">
+            <Label for="from">From:</Label>
+
+            <Input v-model="from" id="from" type="date" />
+          </div>
+          <div class="flex gap-2 items-center">
+            <Label for="to">To:</Label>
+
+            <Input v-model="to" id="to" type="date" />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <Label>Filter: </Label>
+
+          <Select v-model="filter">
+            <option value="">All</option>
+
+            <option v-for="option in optionsFilter" :value="option.value">
+              {{ option.label }}
+            </option>
+          </Select>
+        </div>
       </div>
     </div>
   </div>
@@ -109,5 +117,9 @@ const from = defineModel("from", {
 
 const checkChoose = computed(() => {
   return !filter.value ? true : false;
+});
+
+const allowInput = computed(() => {
+  return filter.value === "date" ? true : false;
 });
 </script>

@@ -18,3 +18,13 @@ export const deleteTransactions = async (id) => {
   const response = await api.delete(`transactions/${id}`);
   return response.data;
 };
+
+export const summaryByCategories = async (params) => {
+  const response = await api.get("/transactions/summary-by-category", { params });
+  return response.data;
+};
+
+export const summaryTransaction = async () => {
+  const response = await api.get("transactions/summary");
+  return response.data;
+};

@@ -1,34 +1,47 @@
 <template>
-  <TransactionHead
-    @open-dialog-create="openOrCloseDialogCreateEdit"
-    @search-transaction="searchTransaction"
-    v-model:filterValue="filterValue"
-    v-model:filter="filter"
-    v-model:to="to"
-    v-model:from="from"
-    :optionsType="optionsType"
-    :optionsFilter="optionsFilter"
-    :categories="categories"
-  />
-
-  <div class="pt-10">
-    <ListTransaction
-      :heads="heads"
-      @open-dialog-delete="openDialogDelete"
-      @open-dialog-edit="openDialogEdit"
-      :transactions="transactionsFilter"
+  <section>
+    <TransactionHead
+      @open-dialog-create="openOrCloseDialogCreateEdit"
+      @search-transaction="searchTransaction"
+      v-model:filterValue="filterValue"
+      v-model:filter="filter"
+      v-model:to="to"
+      v-model:from="from"
+      :optionsType="optionsType"
+      :optionsFilter="optionsFilter"
+      :categories="categories"
     />
-  </div>
 
-  <DialogFormTransaction
-    v-model="forms"
-    :title="title"
-    :open="isOpen"
-    @close-dialog="openOrCloseDialogCreateEdit"
-    @submit="handleTransaction"
-    :categories="categories"
-  />
-  <DialogDeleteTransaction :open="isOpenDelete" @close-dialog-delete="closeDialogDelete" @submit="deleteTransaction" />
+    <div class="pt-10">
+      <ListTransaction
+        :heads="heads"
+        @open-dialog-delete="openDialogDelete"
+        @open-dialog-edit="openDialogEdit"
+        @change-page="changePage"
+        :page="page"
+        :totalPages="totalPages"
+        :totalElements="totalElements"
+        :transactions="transactionsFilter"
+        :icons="CATEGORY_ICON"
+      />
+    </div>
+
+    <DialogFormTransaction
+      v-model="forms"
+      :title="title"
+      :open="isOpen"
+      @close-dialog="openOrCloseDialogCreateEdit"
+      @submit="handleTransaction"
+      :categories="categories"
+      :loading="loading"
+    />
+    <DialogDeleteTransaction
+      :open="isOpenDelete"
+      @close-dialog-delete="closeDialogDelete"
+      @submit="deleteTransaction"
+      :loading="loading"
+    />
+  </section>
 </template>
 
 <script setup>
@@ -36,7 +49,7 @@ import { onMounted, reactive, ref, watch } from "vue";
 import ListTransaction from "../components/ListTransaction.vue";
 import DialogFormTransaction from "../components/DialogFormTransaction.vue";
 import DialogDeleteTransaction from "../components/DialogDeleteTransaction.vue";
-import { getCatagroies } from "@/modules/Category/services/category.service.js";
+import { getCatagroies } from "@/modules/Category/services/api/category.service.js";
 import {
   createTransactions,
   deleteTransactions,
@@ -45,6 +58,7 @@ import {
 } from "../services/api/transaction.service.js";
 import { toast } from "vue3-toastify";
 import TransactionHead from "../components/TransactionHead.vue";
+import { CATEGORY_ICON } from "@/shared/utils/shareIcon.js";
 
 const filterValue = ref("");
 const to = ref("");
@@ -79,6 +93,12 @@ const forms = reactive({
   categoryId: "",
   description: "",
 });
+
+const page = ref(0);
+const size = ref(5);
+const totalPages = ref(0);
+const totalElements = ref(0);
+const keyword = ref("");
 
 const resetForm = () => {
   forms.amount = "";
@@ -115,31 +135,17 @@ const openDialogEdit = (transaction) => {
   forms.description = transaction.description;
 };
 
+const changePage = (newPage) => {
+  if (newPage < 0 || newPage >= totalPages.value) return;
+
+  page.value = newPage;
+  paginateTransaction();
+};
+
 const fetchCategories = async () => {
   try {
     const response = await getCatagroies();
     categories.value = response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const fetchTransactions = async () => {
-  try {
-    const params = {
-      from: from.value,
-      to: to.value,
-    };
-    if (filter.value === "type") {
-      params.type = filterValue.value;
-    }
-
-    if (filter.value === "categoryId") {
-      params.categoryId = filterValue.value;
-    }
-    const response = await getTransactions(params);
-    transactions.value = response.data.items;
-    transactionsFilter.value = response.data.items;
   } catch (error) {
     console.log(error);
   }
@@ -163,7 +169,7 @@ const handleTransaction = async () => {
     }
     toast.success(response.message);
     openOrCloseDialogCreateEdit();
-    fetchTransactions();
+    paginateTransaction();
   } catch (error) {
     toast.error(error.response.data.message);
   } finally {
@@ -177,7 +183,7 @@ const deleteTransaction = async () => {
     const response = await deleteTransactions(id.value);
     toast.success(response.message);
     closeDialogDelete();
-    fetchTransactions();
+    paginateTransaction();
   } catch (error) {
     toast.error(error.response.data.message);
   } finally {
@@ -185,36 +191,60 @@ const deleteTransaction = async () => {
   }
 };
 
-const searchTransaction = (event) => {
-  if (event.target.value) {
-    if (filter.value !== "categoryId") {
-      const newData = transactions.value.filter((items) => {
-        if (!filterValue.value) {
-          return items.categoryName.toLowerCase().includes(event.target.value.toLowerCase());
-        }
-        return (
-          items.categoryName.toLowerCase().includes(event.target.value.toLowerCase()) &&
-          items.type === filterValue.value
-        );
-      });
-      transactionsFilter.value = newData;
-    } else {
-      const newData = transactions.value.filter((items) => {
-        return String(items.amount).toLowerCase().includes(event.target.value.toLowerCase());
-      });
-      transactionsFilter.value = newData;
-    }
-  } else {
-    transactionsFilter.value = transactions.value;
-  }
+const searchTransaction = (value) => {
+  keyword.value = value;
+  page.value = 0;
+  paginateTransaction();
 };
 
+const paginateTransaction = async () => {
+  try {
+    const pagination = {
+      page: page.value,
+      size: size.value,
+      from: from.value,
+      to: to.value,
+      keyword: keyword.value,
+    };
+    if (filter.value === "type") {
+      pagination.type = filterValue.value;
+      pagination.searchBy = "category";
+    }
+
+    if (filter.value === "categoryId") {
+      pagination.categoryId = filterValue.value;
+      pagination.searchBy = "amount";
+    }
+
+    if (filter.value === "" || filter.value === "date") {
+      pagination.searchBy = "category";
+    }
+
+    const response = await getTransactions(pagination);
+
+    totalPages.value = response.data.totalPages;
+    totalElements.value = response.data.totalElements;
+    transactions.value = response.data.items;
+    transactionsFilter.value = response.data.items;
+  } catch (error) {
+    console.log(error);
+  }
+};
 onMounted(() => {
   fetchCategories();
-  fetchTransactions();
+  paginateTransaction();
 });
 
-watch([filterValue, to], () => {
-  fetchTransactions();
+watch([filterValue, to, filter], () => {
+  page.value = 0;
+  paginateTransaction();
+});
+
+watch(filter, () => {
+  filterValue.value = "";
+  from.value = "";
+  filterValue.value = "";
+  page.value = 0;
+  paginateTransaction();
 });
 </script>

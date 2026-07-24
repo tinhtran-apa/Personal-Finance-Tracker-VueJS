@@ -9,7 +9,7 @@
     <TableBody>
       <TableRow v-for="transaction in props.transactions" class="group">
         <TableCell
-          ><div class="flex flex-col gap-1">
+          ><div class="flex flex-col gap-1 italic font-semibold">
             <span>{{ formatDate(transaction.transactionDate) }}</span>
             <span class="text-gray-400 text-xs">{{ formatTime(transaction.createdAt) }}</span>
           </div>
@@ -20,14 +20,15 @@
         >
 
         <TableCell
-          ><span class="bg-gray-200 px-2 py-1 rounded-full font-semibold">{{
-            transaction.categoryName
-          }}</span></TableCell
+          ><span class="bg-gray-200 px-2 py-1 rounded-full font-semibold flex gap-2 w-fit">
+            <img :src="findIcon(transaction.categoryIcon)" alt="" class="h-5">
+            {{ transaction.categoryName }}
+          </span></TableCell
         >
 
         <TableCell
           ><span :class="checkClassAmount(transaction.type)"
-            >{{ checkCalAmount(transaction.type) + " " + transaction.amount }} $</span
+            >{{ checkCalAmount(transaction.type) + " " + formatMoney(transaction.amount) }} $</span
           ></TableCell
         >
 
@@ -61,22 +62,35 @@
       <TableRow>
         <TableCell colspan="6">
           <div class="flex justify-between">
-            <p class="text-neutral text-xs flex items-center">Showing 1 to 10 of 42 result</p>
+            <p class="text-neutral text-xs flex items-center">
+              Showing {{ props.page + 1 }} to {{ props.totalPages }} of {{ props.totalElements }} result
+            </p>
 
             <div class="flex gap-1">
-              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
+              <Button
+                @click="emit('change-page', props.page - 1)"
+                class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
                 ><img :src="chevronLeft" alt=""
               /></Button>
 
-              <Button class="py-2 px-2 shadow-none rounded-xl hover:bg-link bg-primary text-white">1</Button>
+              <!-- <Button class="py-2 px-2 shadow-none rounded-xl hover:bg-link bg-primary text-white">1</Button> -->
 
-              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link">2</Button>
+              <Button
+                v-for="i in totalPages"
+                :key="i"
+                @click="emit('change-page', i - 1)"
+                class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
+              >
+                {{ i }}</Button
+              >
 
-              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link">3</Button>
+              <!-- <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link">3</Button> -->
 
-              <span class="flex items-center">...</span>
+              <!-- <span class="flex items-center">...</span> -->
 
-              <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
+              <Button
+                @click="emit('change-page', props.page + 1)"
+                class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
                 ><img :src="chevronRight" alt=""
               /></Button>
             </div>
@@ -106,6 +120,7 @@ import chevronRight from "@/shared/assets/icons/chevron-right.svg";
 import Button from "@/shared/ui/components/Button.vue";
 import { formatDate } from "@/shared/utils/formatDate";
 import { formatTime } from "@/shared/utils/formatTime";
+import { formatMoney } from "@/shared/utils/formatMoney";
 const props = defineProps({
   heads: {
     type: Array,
@@ -115,8 +130,24 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  page: {
+    type: Number,
+    default: 0,
+  },
+  totalPages: {
+    type: Number,
+    default: 0,
+  },
+  totalElements: {
+    type: Number,
+    default: 0,
+  },
+  icons: {
+    type: Array,
+    default: 0,
+  },
 });
-const emit = defineEmits(["open-dialog-edit", "open-dialog-delete"]);
+const emit = defineEmits(["open-dialog-edit", "open-dialog-delete", "change-page"]);
 
 const checkIconType = (field) => {
   return field === "EXPENSE" ? arrowUp : arrowDown;
@@ -130,10 +161,22 @@ const checkClassType = (field) => {
 };
 
 const checkClassAmount = (field) => {
-  return ["font-semibold", field === "EXPENSE" ? "text-red-500" : "text-secondary"];
+  return ["font-extrabold", field === "EXPENSE" ? "text-red-500" : "text-secondary"];
 };
 
 const checkCalAmount = (field) => {
   return field === "EXPENSE" ? "-" : "+";
+};
+
+const findIcon = (field) => {
+  const item = props.icons.find((icon) => {
+    return icon.label === field;
+  });
+
+  if (item) {
+    return item.icon;
+  }
+
+  return "";
 };
 </script>

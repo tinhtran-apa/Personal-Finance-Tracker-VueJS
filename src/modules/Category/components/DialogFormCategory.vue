@@ -13,7 +13,25 @@
 
           <div class="relative">
             <Input v-model="forms.name" id="name" placeholder="Add name category" class="pr-3 pl-8" />
+
             <img :src="stack" alt="" class="absolute top-1.5 left-1.5" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5 mb-4">
+          <div class="flex justify-between">
+            <Label for="name"> Icon </Label>
+          </div>
+
+          <div class="flex gap-2">
+            <Button
+              @click="forms.icon = ic.label"
+              v-for="ic in icons"
+              :key="ic"
+              :class="checkClassIcon(forms.icon === ic.label)"
+              type="button"
+            >
+              <img :src="ic.icon" alt="" />
+            </Button>
           </div>
         </div>
         <div class="flex flex-col gap-1.5 mb-4">
@@ -22,27 +40,17 @@
           </div>
 
           <div class="flex rounded-md bg-link p-1 gap-2">
-            <Button
-              @click="forms.type = 'EXPENSE'"
-              :class="checkClassExpense(forms.type)"
-              type="button"
-            >
+            <Button @click="forms.type = 'EXPENSE'" :class="checkClassExpense(forms.type)" type="button">
               Expense
             </Button>
 
-            <Button
-              @click="forms.type = 'INCOME'"
-              :class="checkClassIncome(forms.type)"
-              type="button"
-            >
-              Income
-            </Button>
+            <Button @click="forms.type = 'INCOME'" :class="checkClassIncome(forms.type)" type="button"> Income </Button>
           </div>
         </div>
       </DialogContent>
       <DialogFooter>
-        <Button @click="emit('close-dialog-delete')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
-        <Button class="w-fit bg-primary text-white">Confirm</Button>
+        <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
+        <Button :disabled="props.loading" class="w-fit bg-primary text-white">Confirm</Button>
       </DialogFooter>
     </form>
   </Dialog>
@@ -64,6 +72,14 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+  icons: {
+    type: Array,
+    default: () => [],
+  },
 });
 
 const forms = defineModel({
@@ -74,10 +90,14 @@ const forms = defineModel({
 const emit = defineEmits(["close-dialog", "submit"]);
 
 const checkClassIncome = (field) => {
-  return ['flex-1 rounded-md py-2 ', field === 'INCOME' ? 'bg-white shadow' : 'bg-neutral-200']
-}  
+  return ["flex-1 rounded-md py-2 ", field === "INCOME" ? "bg-white shadow" : "bg-neutral-200"];
+};
 
 const checkClassExpense = (field) => {
-  return ['flex-1 rounded-md py-2 ', field === 'EXPENSE' ? 'bg-white shadow' : 'bg-neutral-200']
-}  
+  return ["flex-1 rounded-md py-2 ", field === "EXPENSE" ? "bg-white shadow" : "bg-neutral-200"];
+};
+
+const checkClassIcon = (field) => {
+  return ["p-2 shadow-none border border-neutral hover:bg-link", field ? "bg-link" : ""];
+};
 </script>

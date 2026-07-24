@@ -1,5 +1,5 @@
 <template>
-  <Dialog :open="open" class="max-w-lg">
+  <Dialog :open="props.open" class="max-w-lg">
     <DialogHeader>
       <h2 class="text-2xl">Delete category</h2>
     </DialogHeader>
@@ -10,7 +10,7 @@
       </DialogContent>
       <DialogFooter>
         <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
-        <Button class="w-fit bg-red-400 text-white">Confirm</Button>
+        <Button :disabled="props.loading" class="w-fit bg-red-400 text-white">Confirm</Button>
       </DialogFooter>
     </form>
   </Dialog>
@@ -20,8 +20,12 @@
 import Button from "@/shared/ui/components/Button.vue";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@/shared/ui/components/dialog";
 
-defineProps({
+const props = defineProps({
   open: {
+    type: Boolean,
+    default: false,
+  },
+  loading: {
     type: Boolean,
     default: false,
   },

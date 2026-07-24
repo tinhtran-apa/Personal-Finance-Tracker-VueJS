@@ -51,7 +51,7 @@
             <div class="relative">
               <Select v-model="forms.categoryId" id="categoryId" class="pl-8">
                 <option disabled value="">Category</option>
-                <option v-for="category in categories" :value="category.id">
+                <option v-for="category in filterCategory(forms.type)" :value="category.id">
                   {{ category.name }}
                 </option>
               </Select>
@@ -76,7 +76,7 @@
       </DialogContent>
       <DialogFooter>
         <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
-        <Button class="w-fit bg-primary text-white">Confirm</Button>
+        <Button :disabled="props.loading" class="w-fit bg-primary text-white">Confirm</Button>
       </DialogFooter>
     </form>
   </Dialog>
@@ -106,6 +106,10 @@ const props = defineProps({
   title: {
     type: String,
     default: ""
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -125,4 +129,7 @@ const checkClassIncome = (field) => {
 const checkClassExpense = (field) => {
   return ["flex-1 rounded-md py-2 ", field === "EXPENSE" ? "bg-white shadow" : "bg-neutral-200"];
 };
+const filterCategory = (field) => {
+  return props.categories.filter((items) => items.type === field)
+}
 </script>
