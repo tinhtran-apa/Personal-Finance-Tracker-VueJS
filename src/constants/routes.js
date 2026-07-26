@@ -1,11 +1,11 @@
 export const ROUTES = {
-  LOGIN: "/login",
-  REGISTER: "/register",
-  FORGOT_PASSWORD: "/forgot-password",
+  LOGIN: "login",
+  REGISTER: "register",
+  FORGOT_PASSWORD: "forgot-password",
 
-  CATEGORIES: "/categories",
+  CATEGORIES: "categories",
 
-  DASHBOARD: "/dashboard",
+  DASHBOARD: "dashboard",
 
-  TRANSACTIONS: "/transactions"
+  TRANSACTIONS: "transactions"
 };

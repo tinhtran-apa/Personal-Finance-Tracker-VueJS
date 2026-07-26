@@ -20,11 +20,8 @@ export const deleteTransactions = async (id) => {
 };
 
 export const summaryByCategories = async (params) => {
-  const response = await api.get("/transactions/summary-by-category", { params });
+  const response = await api.get("transactions/summary-by-category", { params });
   return response.data;
 };
 
-export const summaryTransaction = async () => {
-  const response = await api.get("transactions/summary");
-  return response.data;
-};
+

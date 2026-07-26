@@ -5,6 +5,7 @@ import DashboardPage from "../views/DashboardPage.vue";
 export default [
     {
         path: "/",
+        redirect: ROUTES.DASHBOARD,
         component: DefaultLayout,
         children: [
             {

@@ -6,7 +6,10 @@ import RegisterPage from "../views/RegisterPage.vue";
 export default [
   {
     path: "/",
-    redirect: ROUTES.LOGIN,
+    redirect: "/dashboard",
+  },
+  {
+    path: "/",
     component: BlankLayout,
     children: [
       {
