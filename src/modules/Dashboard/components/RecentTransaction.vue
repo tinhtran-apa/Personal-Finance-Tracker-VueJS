@@ -12,11 +12,11 @@
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="transaction in props.transactions">
+      <TableRow v-for="transaction in props.transactions" :key="transaction.id">
         <TableCell
           ><div class="flex flex-col gap-1 italic font-semibold">
             <span>{{ formatDate(transaction.transactionDate) }}</span>
-            <span class="text-gray-400 text-xs">{{ formatTime(transaction.createdAt) }}</span>
+            <span class="text-neutral-400 text-xs">{{ formatTime(transaction.createdAt) }}</span>
           </div>
         </TableCell>
 

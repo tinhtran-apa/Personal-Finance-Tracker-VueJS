@@ -2,11 +2,19 @@
   <Card class="py-8 px-10 flex flex-col max-w-[500px]">
     <AuthHeader :header="header" :icon="bank" />
 
-    <AuthForm :forms="forms" submit="Sign up">
+    <AuthForm
+      :forms="forms"
+      v-model="formSubmit"
+      @submit="handleSubmit"
+      :errors="errors"
+      @clear-error="clearFieldError"
+      @toggle-password="togglePassword"
+      submit="Sign up"
+    >
       <div class="flex gap-2 text-sm">
-        <Checkbox />
+        <Checkbox v-model="formSubmit.policy" @change="clearFieldError('policy')" />
 
-        <span class="text-neutral"
+        <span :class="errorPolicy"
           >I agreed to the <span class="text-primary font-bold">Terms of Service</span> and
           <span class="text-primary font-bold">Privacy Policy</span>
         </span>
@@ -27,7 +35,10 @@ import AuthForm from "../components/AuthForm.vue";
 import Checkbox from "@/shared/ui/components/CheckBox.vue";
 import { ROUTES } from "../../../constants/routes.js";
 import bank from "@/shared/assets/icons/bank.svg";
-import { ref } from "vue";
+import { computed, reactive, ref } from "vue";
+import { validateRegister } from "../validators/auth.validate.js";
+import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
 
 const header = {
   title: "JOIN FINTRACK",
@@ -44,7 +55,7 @@ const forms = ref([
   {
     id: "email",
     title: "Email address",
-    type: "Email",
+    type: "email",
     placeholder: "Enter your email",
   },
   {
@@ -60,4 +71,33 @@ const forms = ref([
     placeholder: "Re-enter your password",
   },
 ]);
+const errors = ref({});
+
+const formSubmit = reactive({ fullName: "", email: "", password: "", confirmPassword: "", policy: false });
+
+const router = useRouter();
+
+const handleSubmit = () => {
+  const result = validateRegister(formSubmit);
+  errors.value = result || {};
+  if (!result) {
+    toast.success("Register successful !");
+    router.push(ROUTES.LOGIN);
+  }
+};
+
+const errorPolicy = computed(() => {
+  return errors.value.policy ? "underline decoration-red-500" : "text-neutral";
+});
+
+const clearFieldError = (field) => {
+  errors.value[field] = "";
+};
+
+const togglePassword = (field) => {
+  const form = forms.value.find((f) => f.id === field);
+  if (form) {
+    form.type = form.type === "password" ? "text" : "password";
+  }
+};
 </script>

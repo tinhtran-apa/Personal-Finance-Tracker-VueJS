@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="flex flex-col gap-2 px-2">
-      <RouterLink :to="head.path" v-for="head in heads" :key="head" :class="checkPathDesktop(head.path)">
+      <RouterLink :to="head.path" v-for="head in heads" :key="head.title" :class="checkPathDesktop(head.path)">
         <img :src="head.icon" alt="" />
         <span>{{ head.title }}</span>
       </RouterLink>

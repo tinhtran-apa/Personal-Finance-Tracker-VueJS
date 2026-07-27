@@ -32,8 +32,10 @@
       :open="isOpen"
       @close-dialog="openOrCloseDialogCreateEdit"
       @submit="handleTransaction"
+      @clear-error="clearFieldError"
       :categories="categories"
       :loading="loading"
+      :errors="errors"
     />
     <DialogDeleteTransaction
       :open="isOpenDelete"
@@ -59,6 +61,7 @@ import {
 import { toast } from "vue3-toastify";
 import TransactionHead from "../components/TransactionHead.vue";
 import { CATEGORY_ICON } from "@/shared/utils/shareIcon.js";
+import { validateCreateOrEditTransaction } from "../validators/transaction.valdiate.js";
 
 const filterValue = ref("");
 const to = ref("");
@@ -86,6 +89,7 @@ const isOpen = ref(false);
 const isOpenDelete = ref(false);
 const loading = ref(false);
 const id = ref(null);
+const errors = ref({});
 const forms = reactive({
   amount: "",
   type: "EXPENSE",
@@ -107,6 +111,10 @@ const resetForm = () => {
   forms.categoryId = "";
   forms.description = "";
   id.value = null;
+};
+
+const clearFieldError = (field) => {
+  errors.value[field] = "";
 };
 
 const openOrCloseDialogCreateEdit = () => {
@@ -154,6 +162,11 @@ const fetchCategories = async () => {
 const handleTransaction = async () => {
   try {
     loading.value = true;
+    const result = validateCreateOrEditTransaction(forms);
+    errors.value = result || {};
+    if (result) {
+      return;
+    }
     const payload = {
       amount: Number(forms.amount),
       type: forms.type,
@@ -205,6 +218,7 @@ const paginateTransaction = async () => {
       from: from.value,
       to: to.value,
       keyword: keyword.value,
+      sort: "transactionDate,desc"
     };
     if (filter.value === "type") {
       pagination.type = filterValue.value;

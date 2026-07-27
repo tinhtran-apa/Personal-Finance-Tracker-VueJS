@@ -8,17 +8,17 @@
       )
     "
   >
-    <img v-if="disabled" :src="loading" alt="">
+    <img v-if="disabled" :src="loading" alt="" />
     <slot />
   </button>
 </template>
 
 <script setup>
 import { twMerge } from "tailwind-merge";
-import loading from "@/shared/assets/icons/loading.svg"
+import loading from "@/shared/assets/icons/loading.svg";
 const props = defineProps({
   class: String,
-  disabled: Boolean,
+  disabled: { type: Boolean, default: false },
   default: false,
 });
 </script>

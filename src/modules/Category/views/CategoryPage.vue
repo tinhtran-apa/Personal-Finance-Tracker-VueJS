@@ -23,9 +23,11 @@
       :open="isOpen"
       @close-dialog="openOrCloseDialogCreateEdit"
       @submit="handleCategories"
+      @clear-error="clearFieldError"
       v-model="forms"
       :loading="loading"
       :icons="CATEGORY_ICON"
+      :errors="errors"
     />
 
     <DialogDeleteCategory
@@ -52,6 +54,7 @@ import { getTransactions, summaryByCategories } from "@/modules/Transaction/serv
 import { toast } from "vue3-toastify";
 import CategoryHead from "../components/CategoryHead.vue";
 import { CATEGORY_ICON } from "@/shared/utils/shareIcon.js";
+import { validateCreateOrEditCategory } from "../validators/category.validate.js";
 
 const optionsType = [
   { label: "Income", value: "INCOME" },
@@ -68,6 +71,7 @@ const isOpen = ref(false);
 const isOpenDelete = ref(false);
 const loading = ref(false);
 const id = ref(null);
+const errors = ref({});
 const forms = reactive({
   name: "",
   type: "EXPENSE",
@@ -122,6 +126,11 @@ const deleteCategory = async () => {
 const handleCategories = async () => {
   try {
     loading.value = true;
+    const result = validateCreateOrEditCategory(forms);
+    errors.value = result || {};
+    if (result) {
+      return;
+    }
     const payload = {
       name: forms.name,
       type: forms.type,
@@ -137,7 +146,7 @@ const handleCategories = async () => {
     openOrCloseDialogCreateEdit();
     fetchCategories();
   } catch (error) {
-    toast.error(error.response.data.message);
+    toast.error(error.response?.data?.message);
   } finally {
     loading.value = false;
   }
@@ -163,6 +172,10 @@ const filterCategoryType = () => {
     return;
   }
   categoriesFilter.value = categories.value.filter((items) => items.type === type.value);
+};
+
+const clearFieldError = (field) => {
+  errors.value[field] = "";
 };
 
 const fetchCategories = async () => {

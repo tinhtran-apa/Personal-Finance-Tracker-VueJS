@@ -3,15 +3,9 @@ import CategoryPage from "../views/CategoryPage.vue";
 import { ROUTES } from "@/constants/routes.js";
 
 export default [
-    {
-        path: "/",
-        component: DefaultLayout,
-        children: [
-            {
-                path: ROUTES.CATEGORIES,
-                name: "categories",
-                component: CategoryPage
-            }
-        ]
-    }
-]
+  {
+    path: ROUTES.CATEGORIES,
+    name: "categories",
+    component: CategoryPage,
+  },
+];

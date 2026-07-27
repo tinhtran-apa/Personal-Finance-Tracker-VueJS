@@ -93,6 +93,9 @@ const years = Array.from({ length: 11 }, (_, i) => 2020 + i);
 const emit = defineEmits(["filter-by-year"]);
 
 const calculatePercent = (value) => {
+  if (props.dashboards.balance === 0) {
+    return 0;
+  }
   return ((value / props.dashboards.balance) * 100).toFixed(0);
 };
 </script>

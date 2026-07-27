@@ -15,5 +15,4 @@ createApp(App)
     position: "top-right",
   })
   .use(VueApexCharts)
-  .component("apexcharts", VueApexCharts)
   .mount("#app");

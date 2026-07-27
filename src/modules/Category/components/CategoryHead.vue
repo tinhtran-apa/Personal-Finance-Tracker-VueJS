@@ -21,7 +21,7 @@
         <Label> Filter: </Label>
         <Select v-model="type" @change="emit('filter-category-type')">
           <option value="">All</option>
-          <option v-for="option in optionsType" :key="option" :value="option.value">
+          <option v-for="option in optionsType" :key="option.value" :value="option.value">
             {{ option.label }}
           </option>
         </Select>

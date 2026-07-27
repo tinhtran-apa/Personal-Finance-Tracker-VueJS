@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="chart">
-      <apexchart type="donut" width="380" :options="chartOptions" :series="props.series" />
+      <apexchart :key="series.join('-')" type="donut" width="380" :options="chartOptions" :series="props.series" />
     </div>
   </div>
 </template>

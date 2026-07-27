@@ -1,11 +1,15 @@
 <template>
   <div class="grid grid-cols-3 gap-4">
-    <Card v-for="category in props.categories" class="p-3 group hover:scale-95 duration-200 cursor-pointer">
+    <Card
+      v-for="category in props.categories"
+      :key="category.id"
+      class="p-3 group hover:scale-95 duration-200 cursor-pointer"
+    >
       <div class="flex justify-between">
         <div class="rounded-full bg-link p-3">
           <img :src="findIcon(category.icon)" alt="" />
         </div>
-        <p :class="checkType(category.type)">12 Transactions</p>
+        <p :class="checkType(category.type)">{{ checkSummaryTransaction(category.id) }} Transactions</p>
       </div>
       <div class="flex justify-between">
         <div class="flex gap-2 flex-col">
@@ -72,6 +76,12 @@ const checkAmount = (field) => {
   const item = props.summaryAmount.find((item) => item.categoryId === field);
 
   return item ? item.total : 0;
+};
+
+const checkSummaryTransaction = (field) => {
+  const item = props.summaryAmount.find((item) => item.categoryId === field);
+
+  return item ? item.transactionCount : 0;
 };
 
 const checkClassAmount = (field) => {

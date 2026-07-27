@@ -38,7 +38,11 @@ const dashboards = ref({
 
 const fetchTransaction = async () => {
   try {
-    const response = await getTransactions({ size: 3 });
+    const params = {
+      size: 3,
+      sort: "transactionDate,desc"
+    }
+    const response = await getTransactions( params );
     transactions.value = response.data.items;
   } catch (error) {
     console.log(error);

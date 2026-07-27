@@ -3,16 +3,9 @@ import { ROUTES } from "@/constants/routes.js";
 import DashboardPage from "../views/DashboardPage.vue";
 
 export default [
-    {
-        path: "/",
-        redirect: ROUTES.DASHBOARD,
-        component: DefaultLayout,
-        children: [
-            {
-                path: ROUTES.DASHBOARD,
-                name: "dashboard",
-                component: DashboardPage
-            }
-        ]
-    }
-]
+  {
+    path: ROUTES.DASHBOARD,
+    name: "dashboard",
+    component: DashboardPage,
+  },
+];
