@@ -5,6 +5,7 @@
     <AuthForm
       :forms="forms"
       v-model="formSubmit"
+      :loading="loading"
       @submit="handleSubmit"
       :errors="errors"
       @clear-error="clearFieldError"
@@ -39,6 +40,7 @@ import { computed, reactive, ref } from "vue";
 import { validateRegister } from "../validators/auth.validate.js";
 import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
+import { register } from "../services/api/auth.service.js";
 
 const header = {
   title: "JOIN FINTRACK",
@@ -77,12 +79,28 @@ const formSubmit = reactive({ fullName: "", email: "", password: "", confirmPass
 
 const router = useRouter();
 
-const handleSubmit = () => {
-  const result = validateRegister(formSubmit);
-  errors.value = result || {};
-  if (!result) {
-    toast.success("Register successful !");
+const loading = ref(false);
+
+const handleSubmit = async () => {
+  try {
+    loading.value = true;
+    const result = validateRegister(formSubmit);
+    errors.value = result || {};
+    if (result) {
+      return;
+    }
+    const payload = {
+      fullName: formSubmit.fullName,
+      email: formSubmit.email,
+      password: formSubmit.password,
+    };
+    const response = await register(payload);
+    toast.success(response.message);
     router.push(ROUTES.LOGIN);
+  } catch (error) {
+    toast.error(error.response?.data?.message);
+  } finally {
+    loading.value = false;
   }
 };
 

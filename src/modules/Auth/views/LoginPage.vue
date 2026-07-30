@@ -6,6 +6,7 @@
       :forms="forms"
       v-model="formSubmit"
       :errors="errors"
+      :loading="userStore.loading"
       @submit="handleSubmit"
       @clear-error="clearFieldError"
       @toggle-password="togglePassword"
@@ -21,7 +22,7 @@
     </AuthForm>
 
     <span class="text-neutral self-center mt-3"
-      >Dont't have an account?
+      >Don't have an account?
       <RouterLink :to="ROUTES.REGISTER" class="text-primary font-semibold">Sign up</RouterLink></span
     >
   </Card>
@@ -37,6 +38,7 @@ import bank from "@/shared/assets/icons/bank.svg";
 import AuthHeader from "../components/AuthHeader.vue";
 import { validateLogin } from "../validators/auth.validate.js";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../stores/auth.store.js";
 import { toast } from "vue3-toastify";
 
 const header = {
@@ -58,18 +60,29 @@ const forms = ref([
   },
 ]);
 
+const userStore = useAuthStore();
+
 const errors = ref({});
 
 const formSubmit = reactive({ email: "", password: "" });
 
 const router = useRouter();
 
-const handleSubmit = () => {
-  const result = validateLogin(formSubmit);
-  errors.value = result || {};
-  if (!result) {
-    toast.success("Login successful !");
+const handleSubmit = async () => {
+  try {
+    const result = validateLogin(formSubmit);
+    errors.value = result || {};
+    if (result) {
+      return;
+    }
+    const payload = {
+      email: formSubmit.email,
+      password: formSubmit.password,
+    };
+    await userStore.loginUser(payload)
     router.push(ROUTES.DASHBOARD);
+  } catch (error) {
+    toast.error(error.response?.data?.message)
   }
 };
 

@@ -29,7 +29,7 @@
       </div>
     </template>
     <div class="flex justify-between pb-5"><slot /></div>
-    <Button type="submit" class="text-white rounded-xl bg-primary">{{ props.submit }}</Button>
+    <Button :disabled="loading" type="submit" class="text-white rounded-xl bg-primary">{{ props.submit }}</Button>
   </form>
 </template>
 
@@ -52,6 +52,10 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const emit = defineEmits(["submit", "clear-error", "toggle-password"]);
