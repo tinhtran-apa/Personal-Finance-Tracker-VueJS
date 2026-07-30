@@ -9,13 +9,16 @@ const api = axios.create({
   withCredentials: true,
 });
 
+let isRefreshing = false;
+let refreshPromise = null;
+
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
-    const publicEndpoints = ["/login"];
+    const userStore = useAuthStore();
+    const publicEndpoints = ["auth/login", "auth/refresh"];
     const isPublicEndpoint = publicEndpoints.some((url) => config.url.includes(url));
     if (token && !isPublicEndpoint) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${userStore.accessToken}`;
     }
     return config;
   },
@@ -31,10 +34,17 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const userStore = useAuthStore();
-    if (error.response?.status === 401 && error.config?.url != "auth/refresh" && !originalRequest._retry) {
+    if (error.response?.status === 401 && error.config.url !== "auth/refresh" && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const newAccessToken = await userStore.refreshToken();
+        if (!isRefreshing) {
+          isRefreshing = true;
+          refreshPromise = userStore.refreshToken().finally(() => {
+            isRefreshing = false;
+            refreshPromise = null;
+          });
+        }
+        const newAccessToken = await refreshPromise;
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       } catch (refreshError) {

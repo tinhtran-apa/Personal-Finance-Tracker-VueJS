@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { getMe, login, refreshToken } from "../services/api/auth.service";
 import { toast } from "vue3-toastify";
+import { ROUTES } from "@/constants/routes";
 
 export const useAuthStore = defineStore("auth", {
   state: () => {
@@ -36,6 +37,7 @@ export const useAuthStore = defineStore("auth", {
         return newAccessToken.data.accessToken;
       } catch (error) {
         this.clearAuthData();
+        window.location.href = ROUTES.LOGIN
         throw error;
       }
     },
