@@ -1,11 +1,10 @@
 import { defineStore } from "pinia";
-import { getMe, login, refreshToken } from "../services/api/auth.service";
-import { toast } from "vue3-toastify";
+import { getCurrentUser, login, logout, refreshToken } from "../services/api/auth.service";
 import { ROUTES } from "@/constants/routes";
 
 export const useAuthStore = defineStore("auth", {
   state: () => {
-    const savedUser = localStorage.getItem("user") || null;
+    const savedUser = localStorage.getItem("users") || null;
     return {
       users: savedUser ? JSON.parse(savedUser) : null,
       accessToken: localStorage.getItem("accessToken") || null,
@@ -19,13 +18,12 @@ export const useAuthStore = defineStore("auth", {
         const accessToken = await login(payload);
         this.accessToken = accessToken.data.accessToken;
         localStorage.setItem("accessToken", this.accessToken);
-        const user = await getMe();
-        this.user = user.data;
-        localStorage.setItem("users", JSON.stringify(this.user));
-        toast.success(accessToken.message);
+        const user = await getCurrentUser();
+        this.users = user.data;
+        localStorage.setItem("users", JSON.stringify(this.users));
+        return accessToken.message
       } catch (error) {
-        console.log(error)
-        throw error;
+        throw error
       } finally {
         this.loading = false;
       }
@@ -38,7 +36,16 @@ export const useAuthStore = defineStore("auth", {
         return newAccessToken.data.accessToken;
       } catch (error) {
         this.clearAuthData();
-        window.location.href = ROUTES.LOGIN
+        window.location.href = ROUTES.LOGIN;
+        throw error;
+      }
+    },
+    async logOutUser() {
+      try {
+        const response = await logout();
+        this.clearAuthData();
+        return response.message
+      } catch (error) {
         throw error;
       }
     },

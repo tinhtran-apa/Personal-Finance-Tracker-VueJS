@@ -20,7 +20,7 @@
         <div class="flex items-center gap-2 rounded-4xl bg-green-200 px-2">
           <img :src="trendingUp" alt="" />
           <span class="text-xs text-secondary font-semibold"
-            >+ {{ calculatePercent(props.dashboards.totalIncome) }}%</span
+            > {{ calculatePercent(props.dashboards.totalIncome) }}%</span
           >
         </div>
       </div>
@@ -34,7 +34,7 @@
         <div class="flex items-center gap-2 rounded-4xl bg-red-200 px-2">
           <img :src="trendingDown" alt="" />
           <span class="text-xs text-red-400 font-semibold"
-            >- {{ calculatePercent(props.dashboards.totalExpense) }}%</span
+            > {{ calculatePercent(props.dashboards.totalExpense) }}%</span
           >
         </div>
       </div>
@@ -96,6 +96,6 @@ const calculatePercent = (value) => {
   if (props.dashboards.balance === 0) {
     return 0;
   }
-  return ((value / props.dashboards.balance) * 100).toFixed(0);
+  return ((value / props.dashboards.balance) * 100).toFixed(2);
 };
 </script>

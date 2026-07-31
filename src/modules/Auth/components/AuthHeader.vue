@@ -4,7 +4,7 @@
 
     <span class="text-neutral">{{ header.des }}</span>
 
-    <div class="p-3 bg-green-50 rounded-full">
+    <div class="p-3 bg-green-50 rounded-full relative">
       <img class="w-8 h-8" :src="icon" alt="" />
     </div>
   </div>

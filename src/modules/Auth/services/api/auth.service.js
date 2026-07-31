@@ -10,9 +10,14 @@ export const login = async (user) => {
     return response.data;
 }
 
-export const getMe = async() => {
-    const response = await api.get("auth/me");
+export const getCurrentUser = async() => {
+    const response = await api.get("auth/current-user");
     return response.data;
+}
+
+export const logout = async () => {
+    const response = await api.post("auth/logout");
+    return response.data
 }
 
 export const refreshToken = async() => {

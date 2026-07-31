@@ -79,11 +79,10 @@ const handleSubmit = async () => {
       email: formSubmit.email,
       password: formSubmit.password,
     };
-    await userStore.loginUser(payload)
+    const response  = await userStore.loginUser(payload)
+    toast.success(response)
     router.push(ROUTES.DASHBOARD);
   } catch (error) {
-        console.log(error)
-
     toast.error(error.response?.data?.message)
   }
 };
