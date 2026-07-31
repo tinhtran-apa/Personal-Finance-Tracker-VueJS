@@ -24,6 +24,7 @@ export const useAuthStore = defineStore("auth", {
         localStorage.setItem("users", JSON.stringify(this.user));
         toast.success(accessToken.message);
       } catch (error) {
+        console.log(error)
         throw error;
       } finally {
         this.loading = false;

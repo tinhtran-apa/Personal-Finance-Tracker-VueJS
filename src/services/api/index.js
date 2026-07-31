@@ -15,10 +15,11 @@ let refreshPromise = null;
 api.interceptors.request.use(
   (config) => {
     const userStore = useAuthStore();
+    const token = userStore.accessToken;
     const publicEndpoints = ["auth/login", "auth/refresh"];
     const isPublicEndpoint = publicEndpoints.some((url) => config.url.includes(url));
     if (token && !isPublicEndpoint) {
-      config.headers.Authorization = `Bearer ${userStore.accessToken}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },

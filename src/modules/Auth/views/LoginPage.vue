@@ -82,6 +82,8 @@ const handleSubmit = async () => {
     await userStore.loginUser(payload)
     router.push(ROUTES.DASHBOARD);
   } catch (error) {
+        console.log(error)
+
     toast.error(error.response?.data?.message)
   }
 };
