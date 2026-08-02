@@ -1,22 +1,24 @@
 <template>
-  <h1 class="text-5xl font-semibold">Overview</h1>
+  <h1 class="text-3xl md:text-5xl font-semibold">Overview</h1>
 
   <p class="text-neutral mt-2">Welcome back, here's your financial summary.</p>
 
-  <div class="grid grid-cols-3 gap-5 pt-5 pb-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-5 pb-8">
     <Card class="p-3 relative overflow-hidden">
-      <div class="flex justify-between pb-4">
-        <p class="text-neutral font-semibold text-xl">Total Balance</p>
-        <img :src="wallet" alt="" class="z-10" />
+      <div class="relative z-10">
+        <div class="flex justify-between pb-4">
+          <p class="text-neutral font-semibold text-base md:text-lg lg:text-base xl:text-xl">Total Balance</p>
+          <img :src="wallet" alt="" />
+        </div>
+        <span class="text-xl md:text-2xl lg:text-xl xl:text-4xl font-extrabold flex gap-2"
+          ><count-up :end-val="props.dashboards.balance"></count-up> $</span
+        >
       </div>
-      <span class="text-4xl font-extrabold z-10 flex gap-2"
-        ><count-up :end-val="props.dashboards.balance"></count-up> $</span
-      >
-      <div class="w-32 h-32 rounded-full absolute bg-link top-5 -right-5"></div>
+      <div class="w-24 h-24 md:w-32 md:h-32 rounded-full absolute bg-link top-5 -right-5"></div>
     </Card>
     <Card class="p-3 relative">
       <div class="flex justify-between pb-4">
-        <p class="text-neutral font-semibold text-xl">Monthly Income</p>
+        <p class="text-neutral font-semibold text-base md:text-lg lg:text-base xl:text-xl">Monthly Income</p>
         <div class="flex items-center gap-2 rounded-4xl bg-green-200 px-2">
           <img :src="trendingUp" alt="" />
           <span class="text-xs text-secondary font-semibold"
@@ -24,13 +26,13 @@
           >
         </div>
       </div>
-      <span class="text-4xl font-extrabold flex gap-2"
+      <span class="text-xl md:text-2xl lg:text-xl xl:text-4xl font-extrabold flex gap-2"
         ><count-up :end-val="props.dashboards.totalIncome"></count-up> $</span
       >
     </Card>
-    <Card class="p-3 relative">
+    <Card class="p-3 relative md:col-span-2 lg:col-span-1">
       <div class="flex justify-between pb-4">
-        <p class="text-neutral font-semibold text-xl">Total Expense</p>
+        <p class="text-neutral font-semibold text-base md:text-lg lg:text-base xl:text-xl">Total Expense</p>
         <div class="flex items-center gap-2 rounded-4xl bg-red-200 px-2">
           <img :src="trendingDown" alt="" />
           <span class="text-xs text-red-400 font-semibold"
@@ -38,12 +40,12 @@
           >
         </div>
       </div>
-      <span class="text-4xl font-extrabold flex gap-2"
+      <span class="text-xl md:text-2xl lg:text-xl xl:text-4xl font-extrabold flex gap-2"
         ><count-up :end-val="props.dashboards.totalExpense"></count-up> $</span
       >
     </Card>
-    <Card class="p-3 col-span-2">
-      <div class="flex justify-between items-center">
+    <Card class="p-3 md:col-span-2">
+      <div class="flex justify-between items-center flex-wrap gap-2">
         <p class="font-bold">Chart</p>
         <Select class="w-fit" v-model="model" @change="emit('filter-by-year')">
           <option v-for="year in years" :key="year" :value="year">
@@ -55,10 +57,10 @@
         <slot name="Area" />
       </div>
     </Card>
-    <Card class="p-3">
+    <Card class="p-3 md:col-span-2 lg:col-span-1">
       <div class="flex flex-col gap-2 justify-center items-center">
         <p class="text-center font-bold">Spending Breakdown</p>
-        <div class="">
+        <div class="w-full max-w-md mx-auto">
           <slot name="Donut" />
         </div>
       </div>
@@ -85,8 +87,6 @@ const model = defineModel({
   type: Number,
   default: 0,
 });
-
-const currentYear = new Date().getFullYear();
 
 const years = Array.from({ length: 11 }, (_, i) => 2020 + i);
 

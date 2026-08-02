@@ -39,7 +39,7 @@
     />
     <DialogDeleteTransaction
       :open="isOpenDelete"
-      @close-dialog-delete="closeDialogDelete"
+      @close-dialog="closeDialogDelete"
       @submit="deleteTransaction"
       :loading="loading"
     />

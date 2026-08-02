@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div id="chart">
-      <apexchart :key="series.join('-')" type="donut" width="380" :options="chartOptions" :series="props.series" />
-    </div>
+  <div class="w-full flex justify-center">
+    <apexchart :key="series.join('-')" type="donut" width="100%" :options="chartOptions" :series="props.series" />
   </div>
 </template>
 
@@ -16,7 +14,6 @@ const props = defineProps({
 
 const chartOptions = {
   chart: {
-    width: 380,
     type: "donut",
   },
 
@@ -45,10 +42,14 @@ const chartOptions = {
   },
   responsive: [
     {
-      breakpoint: 480,
+      breakpoint: 640,
       options: {
-        chart: {
-          width: 200,
+        plotOptions: {
+          pie: {
+            donut: {
+              size: "65%",
+            },
+          },
         },
         legend: {
           position: "bottom",
@@ -57,7 +58,6 @@ const chartOptions = {
     },
   ],
 };
-
 </script>
 
 <style scoped>

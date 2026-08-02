@@ -1,6 +1,6 @@
 <template>
-  <div id="chart">
-    <apexchart type="area" height="350" :options="chartOptions" :series="props.series"></apexchart>
+  <div class="w-full">
+    <apexchart type="area" height="300" :options="chartOptions" :series="props.series"></apexchart>
   </div>
 </template>
 <script setup>
@@ -14,10 +14,13 @@ const props = defineProps({
 });
 const chartOptions = ref({
   chart: {
-    height: 350,
+    height: 300,
     type: "area",
     zoom: {
       enabled: false,
+    },
+    toolbar: {
+      show: false,
     },
   },
   dataLabels: {
@@ -51,12 +54,15 @@ const chartOptions = ref({
       },
     },
   },
+  responsive: [
+    {
+      breakpoint: 640,
+      options: {
+        chart: {
+          height: 250,
+        },
+      },
+    },
+  ],
 });
 </script>
-
-<style scoped>
-#chart {
-  max-width: 950px;
-  margin: 35px auto;
-}
-</style>

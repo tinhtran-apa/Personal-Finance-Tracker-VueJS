@@ -21,7 +21,7 @@
         >
 
         <TableCell
-          ><span class="bg-gray-200 px-2 py-1 rounded-full font-semibold flex gap-2 w-fit">
+          ><span class="bg-gray-200 px-2 py-1 rounded-full font-semibold flex gap-2 w-fit items-center">
             <img :src="findIcon(transaction.categoryIcon)" alt="" class="h-5">
             {{ transaction.categoryName }}
           </span></TableCell
@@ -45,13 +45,13 @@
           <div class="flex items-center gap-2">
             <img
               @click="emit('open-dialog-edit', transaction)"
-              class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-neutral-50 transition-all active:scale-75 cursor-pointer"
+              class="opacity-100 md:opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-neutral-50 transition-all active:scale-75 cursor-pointer"
               :src="ellipis"
               alt=""
             />
             <img
               @click="emit('open-dialog-delete', transaction.id)"
-              class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-red-50 transition-all active:scale-75 cursor-pointer"
+              class="opacity-100 md:opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-red-50 transition-all active:scale-75 cursor-pointer"
               :src="trash"
               alt=""
             />
@@ -62,7 +62,7 @@
     <TableFooter>
       <TableRow>
         <TableCell colspan="6">
-          <div class="flex justify-between">
+          <div class="flex sm:flex-row justify-between gap-3">
             <p class="text-neutral text-xs flex items-center">
               Showing {{ props.page + 1 }} to {{ props.totalPages }} of {{ props.totalElements }} result
             </p>
@@ -74,8 +74,6 @@
                 ><img :src="chevronLeft" alt=""
               /></Button>
 
-              <!-- <Button class="py-2 px-2 shadow-none rounded-xl hover:bg-link bg-primary text-white">1</Button> -->
-
               <Button
                 v-for="i in totalPages"
                 :key="i"
@@ -84,10 +82,6 @@
               >
                 {{ i }}</Button
               >
-
-              <!-- <Button class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link">3</Button> -->
-
-              <!-- <span class="flex items-center">...</span> -->
 
               <Button
                 @click="emit('change-page', props.page + 1)"

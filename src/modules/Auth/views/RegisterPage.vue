@@ -1,5 +1,5 @@
 <template>
-  <Card class="py-8 px-10 flex flex-col max-w-[500px]">
+  <Card class="py-6 px-5 md:py-8 md:px-10 flex flex-col max-w-[500px]">
     <AuthHeader :header="header" :icon="bank" />
 
     <AuthForm

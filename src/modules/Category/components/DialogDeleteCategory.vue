@@ -9,7 +9,7 @@
         <p class="text-red-500 text-sm">Are you sure to delete this category !!!</p>
       </DialogContent>
       <DialogFooter>
-        <Button @click="emit('close-dialog-delete')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
+        <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
         <Button :disabled="props.loading" class="w-fit bg-red-400 text-white">Confirm</Button>
       </DialogFooter>
     </form>
@@ -31,5 +31,5 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["close-dialog-delete", "submit"]);
+const emit = defineEmits(["close-dialog", "submit"]);
 </script>

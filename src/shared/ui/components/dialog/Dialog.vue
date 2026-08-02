@@ -8,7 +8,7 @@
     leave-to-class="opacity-0 scale-95"
     mode="out-in"
   >
-    <dialog v-bind="$attrs" ref="dialogRef" class="py-4 m-auto bg-card rounded-xl shadow-card w-full">
+    <dialog v-bind="$attrs" ref="dialogRef" class="py-4 m-auto bg-card rounded-xl shadow-card w-[calc(100%-2rem)] max-w-lg sm:w-full">
       <div class="flex flex-col">
         <slot />
       </div></dialog

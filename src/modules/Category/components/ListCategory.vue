@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <Card
       v-for="category in props.categories"
       :key="category.id"
@@ -22,14 +22,14 @@
 
         <div class="flex flex-col items-center gap-2">
           <img
-            class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-neutral-50 transition-all active:scale-75 cursor-pointer"
+            class="opacity-100 md:opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-neutral-50 transition-all active:scale-75 cursor-pointer"
             :src="ellipis"
             alt=""
             @click="emit('open-dialog-edit', category)"
           />
 
           <img
-            class="opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-red-50 transition-all active:scale-75 cursor-pointer"
+            class="opacity-100 md:opacity-0 group-hover:opacity-100 duration-200 p-2 rounded-full hover:bg-red-50 transition-all active:scale-75 cursor-pointer"
             :src="trash"
             alt=""
             @click="emit('open-dialog-delete', category.id)"
@@ -42,7 +42,6 @@
 
 <script setup>
 import Card from "@/shared/ui/components/Card.vue";
-import food from "@/shared/assets/icons/categories/food.svg";
 import trash from "@/shared/assets/icons/trash.svg";
 import ellipis from "@/shared/assets/icons/ellipis.svg";
 import { formatDate } from "@/shared/utils/formatDate";
