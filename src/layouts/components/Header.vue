@@ -3,16 +3,16 @@
     class="w-full bg-card h-12 border-b border-input sticky top-0 z-50 flex items-center justify-between gap-3 pr-3 pl-3"
   >
     <div class="flex items-center gap-3">
-      <button
+      <Button
         type="button"
-        class="lg:hidden p-2 hover:bg-link rounded-xl transition-transform active:scale-75 duration-200"
+        class="lg:hidden p-2 hover:bg-link rounded-xl transition-transform active:scale-75 duration-200 border-0 shadow-none"
         @click="emit('toggle-sidebar')"
         aria-label="Open menu"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-      </button>
+      </Button>
 
       <h2 class="font-extrabold text-2xl italic shadow-sm border rounded-xl bg-link px-1">FINTRACK</h2>
     </div>
@@ -52,7 +52,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["toggle-avatar", "log-out"]);
+const emit = defineEmits(["toggle-avatar", "log-out", 'toggle-sidebar']);
 
 const changeClassMenuAvatar = computed(() => {
   return [

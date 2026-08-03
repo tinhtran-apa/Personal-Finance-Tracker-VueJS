@@ -38,7 +38,6 @@ import { ROUTES } from "@/constants/routes.js";
 const isSidebarOpen = ref(false);
 const open = ref(false);
 
-const emit = defineEmits(["toggle-sidebar"]);
 
 const authStore = useAuthStore();
 
