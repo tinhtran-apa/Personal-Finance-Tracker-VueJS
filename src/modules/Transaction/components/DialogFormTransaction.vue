@@ -7,10 +7,10 @@
     <form @submit.prevent="emit('submit')">
       <DialogContent>
         <div class="flex flex-col gap-1.5 mb-4">
-          <Label for="amount"> Amount</Label>
+          <BaseLabel for="amount"> Amount</BaseLabel>
 
           <div class="relative">
-            <Input
+            <BaseInput
               id="amount"
               type="number"
               class="h-20 text-neutral text-2xl font-semibold text-right pl-9"
@@ -27,21 +27,21 @@
           }}</span>
         </div>
         <div class="flex flex-col gap-1.5 mb-4">
-          <Label for="type"> Transaction Type </Label>
+          <BaseLabel for="type"> Transaction Type </BaseLabel>
 
           <div class="flex rounded-md bg-link p-1 gap-2">
-            <Button @click="forms.type = 'EXPENSE'" :class="checkClassExpense(forms.type)" type="button">
+            <BaseButton @click="forms.type = 'EXPENSE'" :class="checkClassExpense(forms.type)" type="button">
               Expense
-            </Button>
+            </BaseButton>
 
-            <Button @click="forms.type = 'INCOME'" :class="checkClassIncome(forms.type)" type="button"> Income </Button>
+            <BaseButton @click="forms.type = 'INCOME'" :class="checkClassIncome(forms.type)" type="button"> Income </BaseButton>
           </div>
         </div>
         <div class="flex gap-1.5 mb-4 justify-between">
           <div class="w-full">
-            <Label for="transactionDate"> Date</Label>
+            <BaseLabel for="transactionDate"> Date</BaseLabel>
 
-            <Input
+            <BaseInput
               v-model="forms.transactionDate"
               id="transactionDate"
               type="date"
@@ -55,10 +55,10 @@
           </div>
 
           <div class="w-full">
-            <Label for="category"> Category</Label>
+            <BaseLabel for="category"> Category</BaseLabel>
 
             <div class="relative">
-              <Select
+              <BaseSelect
                 v-model="forms.categoryId"
                 id="categoryId"
                 class="pl-8"
@@ -68,7 +68,7 @@
                 <option v-for="category in filterCategory(forms.type)" :value="category.id">
                   {{ category.name }}
                 </option>
-              </Select>
+              </BaseSelect>
               <img :src="stack" alt="" class="absolute top-1.5 left-1.5" />
             </div>
 
@@ -78,10 +78,10 @@
           </div>
         </div>
         <div class="mb-4">
-          <Label for="description"> Description</Label>
+          <BaseLabel for="description"> Description</BaseLabel>
 
           <div class="relative">
-            <Textarea
+            <BaseTextarea
               v-model="forms.description"
               id="description"
               placeholder="Add details about this transaction..."
@@ -97,20 +97,21 @@
         </div>
       </DialogContent>
       <DialogFooter>
-        <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
-        <Button :disabled="props.loading" class="w-fit bg-primary text-white">Confirm</Button>
+        <BaseButton @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</BaseButton>
+        <BaseButton :disabled="props.loading" class="w-fit bg-primary text-white">Confirm</BaseButton>
       </DialogFooter>
     </form>
   </Dialog>
 </template>
 
 <script setup>
-import Button from "@/shared/ui/components/Button.vue";
+
+import { BaseButton, BaseInput, BaseLabel, BaseSelect, BaseTextarea } from "@/shared/ui/components";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@/shared/ui/components/dialog";
-import Input from "@/shared/ui/components/Input.vue";
-import Label from "@/shared/ui/components/Label.vue";
-import Select from "@/shared/ui/components/Select.vue";
-import Textarea from "@/shared/ui/components/Textarea.vue";
+
+
+
+
 import receipt from "@/shared/assets/icons/receipt.svg";
 import stack from "@/shared/assets/icons/stack.svg";
 import detail from "@/shared/assets/icons/detail.svg";

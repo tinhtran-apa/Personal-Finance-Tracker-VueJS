@@ -8,16 +8,16 @@
       </div>
 
       <div class="md:my-auto">
-        <Button @click="emit('open-dialog-create')" class="w-full md:w-fit bg-primary text-white">
+        <BaseButton @click="emit('open-dialog-create')" class="w-full md:w-fit bg-primary text-white">
           <img :src="plus" alt="" />
 
           Create Transaction
-        </Button>
+        </BaseButton>
       </div>
     </div>
 
     <div class="flex flex-col lg:flex-row justify-between gap-3 pt-4">
-      <Search
+      <BaseSearch
         :disabled="allowInput"
         @input="emit('search-transaction', $event.target.value)"
         class="w-full lg:max-w-2xl"
@@ -27,9 +27,9 @@
 
       <div class="flex flex-col sm:flex-row gap-3">
         <div v-if="filter !== 'date'" class="flex items-center gap-2">
-          <Label>Choose: </Label>
+          <BaseLabel>Choose: </BaseLabel>
 
-          <Select v-model="filterValue" :disabled="checkChoose" :class="{ 'bg-neutral-200': checkChoose }">
+          <BaseSelect v-model="filterValue" :disabled="checkChoose" :class="{ 'bg-neutral-200': checkChoose }">
             <option value="">All</option>
 
             <option v-if="filter === 'type'" v-for="option in optionsType" :key="option.value" :value="option.value">
@@ -39,31 +39,31 @@
             <option v-if="filter === 'categoryId'" v-for="category in categories" :key="category.id" :value="category.id">
               {{ category.name }}
             </option>
-          </Select>
+          </BaseSelect>
         </div>
         <div v-else class="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
           <div class="flex gap-2 items-center">
-            <Label for="from">From:</Label>
+            <BaseLabel for="from">From:</BaseLabel>
 
-            <Input v-model="from" id="from" type="date" />
+            <BaseInput v-model="from" id="from" type="date" />
           </div>
           <div class="flex gap-2 items-center">
-            <Label for="to">To:</Label>
+            <BaseLabel for="to">To:</BaseLabel>
 
-            <Input v-model="to" id="to" type="date" />
+            <BaseInput v-model="to" id="to" type="date" />
           </div>
         </div>
 
         <div class="flex items-center gap-2">
-          <Label>Filter: </Label>
+          <BaseLabel>Filter: </BaseLabel>
 
-          <Select v-model="filter">
+          <BaseSelect v-model="filter">
             <option value="">All</option>
 
             <option v-for="option in optionsFilter" :value="option.value">
               {{ option.label }}
             </option>
-          </Select>
+          </BaseSelect>
         </div>
       </div>
     </div>
@@ -71,12 +71,13 @@
 </template>
 
 <script setup>
+import { BaseButton, BaseInput, BaseLabel, BaseSearch, BaseSelect } from "@/shared/ui/components";
 import plus from "@/shared/assets/icons/plus.svg";
-import Button from "@/shared/ui/components/Button.vue";
-import Input from "@/shared/ui/components/Input.vue";
-import Label from "@/shared/ui/components/Label.vue";
-import Search from "@/shared/ui/components/Search.vue";
-import Select from "@/shared/ui/components/Select.vue";
+
+
+
+
+
 import { computed, watch } from "vue";
 
 const emit = defineEmits(["open-dialog-create", "search-transaction"]);

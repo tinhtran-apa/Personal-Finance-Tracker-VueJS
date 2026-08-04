@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <Card
+    <BaseCard
       v-for="category in props.categories"
       :key="category.id"
       class="p-3 group hover:scale-95 duration-200 cursor-pointer"
@@ -36,12 +36,13 @@
           />
         </div>
       </div>
-    </Card>
+    </BaseCard>
   </div>
 </template>
 
 <script setup>
-import Card from "@/shared/ui/components/Card.vue";
+
+import { BaseCard } from "@/shared/ui/components";
 import trash from "@/shared/assets/icons/trash.svg";
 import ellipis from "@/shared/assets/icons/ellipis.svg";
 import { formatDate } from "@/shared/utils/formatDate";

@@ -3,10 +3,10 @@
     <template v-for="form in props.forms" :key="form.id">
       <div class="flex flex-col gap-1.5 mb-4">
         <div class="flex justify-between">
-          <Label :for="form.id">{{ form.title }}</Label>
+          <BaseLabel :for="form.id">{{ form.title }}</BaseLabel>
         </div>
         <div class="relative">
-          <Input
+          <BaseInput
             v-model="formSubmit[form.id]"
             :id="form.id"
             :type="form.type"
@@ -29,14 +29,15 @@
       </div>
     </template>
     <div class="flex justify-between pb-5"><slot /></div>
-    <Button :disabled="loading" type="submit" class="text-white rounded-xl bg-primary">{{ props.submit }}</Button>
+    <BaseButton :disabled="loading" type="submit" class="text-white rounded-xl bg-primary">{{ props.submit }}</BaseButton>
   </form>
 </template>
 
 <script setup>
-import Button from "@/shared/ui/components/Button.vue";
-import Input from "@/shared/ui/components/Input.vue";
-import Label from "@/shared/ui/components/Label.vue";
+
+
+
+import { BaseButton, BaseInput, BaseLabel } from "@/shared/ui/components";
 import eyeIcon from "@/shared/assets/icons/eye.svg";
 
 const props = defineProps({

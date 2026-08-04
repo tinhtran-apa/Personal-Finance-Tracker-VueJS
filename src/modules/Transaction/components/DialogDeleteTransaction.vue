@@ -9,15 +9,16 @@
         <p class="text-red-500 text-sm">Are you sure to delete this transaction !!!</p>
       </DialogContent>
       <DialogFooter>
-        <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
-        <Button :disabled="props.loading" class="w-fit bg-red-400 text-white">Confirm</Button>
+        <BaseButton @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</BaseButton>
+        <BaseButton :disabled="props.loading" class="w-fit bg-red-400 text-white">Confirm</BaseButton>
       </DialogFooter>
     </form>
   </Dialog>
 </template>
 
 <script setup>
-import Button from "@/shared/ui/components/Button.vue";
+
+import { BaseButton } from "@/shared/ui/components";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@/shared/ui/components/dialog";
 
 const props = defineProps({

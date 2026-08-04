@@ -7,10 +7,10 @@
     <form @submit.prevent="emit('submit')">
       <DialogContent>
         <div class="flex flex-col gap-1.5 mb-4">
-          <Label for="name"> Category name </Label>
+          <BaseLabel for="name"> Category name </BaseLabel>
 
           <div class="relative">
-            <Input
+            <BaseInput
               v-model="forms.name"
               id="name"
               placeholder="Add name category"
@@ -26,10 +26,10 @@
           }}</span>
         </div>
         <div class="flex flex-col gap-1.5 mb-4">
-          <Label for="name"> Icon </Label>
+          <BaseLabel for="name"> Icon </BaseLabel>
 
           <div class="flex gap-2">
-            <Button
+            <BaseButton
               @click="selectIcon(ic.label)"
               v-for="ic in icons"
               :key="ic"
@@ -37,37 +37,38 @@
               type="button"
             >
               <img :src="ic.icon" alt="" />
-            </Button>
+            </BaseButton>
           </div>
           <span v-if="props.errors" class="text-red-500 text-xs leading-5 tracking-normal">{{
             props.errors.icon
           }}</span>
         </div>
         <div class="flex flex-col gap-1.5 mb-4">
-          <Label for="type"> Type </Label>
+          <BaseLabel for="type"> Type </BaseLabel>
 
           <div class="flex rounded-md bg-link p-1 gap-2">
-            <Button @click="forms.type = 'EXPENSE'" :class="checkClassExpense(forms.type)" type="button">
+            <BaseButton @click="forms.type = 'EXPENSE'" :class="checkClassExpense(forms.type)" type="button">
               Expense
-            </Button>
+            </BaseButton>
 
-            <Button @click="forms.type = 'INCOME'" :class="checkClassIncome(forms.type)" type="button"> Income </Button>
+            <BaseButton @click="forms.type = 'INCOME'" :class="checkClassIncome(forms.type)" type="button"> Income </BaseButton>
           </div>
         </div>
       </DialogContent>
       <DialogFooter>
-        <Button @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</Button>
-        <Button :disabled="props.loading" class="w-fit bg-primary text-white">Confirm</Button>
+        <BaseButton @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</BaseButton>
+        <BaseButton :disabled="props.loading" class="w-fit bg-primary text-white">Confirm</BaseButton>
       </DialogFooter>
     </form>
   </Dialog>
 </template>
 
 <script setup>
-import Button from "@/shared/ui/components/Button.vue";
+
+import { BaseButton, BaseInput, BaseLabel } from "@/shared/ui/components";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@/shared/ui/components/dialog";
-import Input from "@/shared/ui/components/Input.vue";
-import Label from "@/shared/ui/components/Label.vue";
+
+
 import stack from "@/shared/assets/icons/stack.svg";
 
 const props = defineProps({

@@ -1,18 +1,13 @@
 <template>
-  <Transition
-    enter-active-class="transition-all duration-200 ease-out"
-    enter-from-class="opacity-0 scale-95"
-    enter-to-class="opacity-100 scale-100"
-    leave-active-class="transition-all duration-200 ease-out"
-    leave-from-class="opacity-100 scale-100"
-    leave-to-class="opacity-0 scale-95"
-    mode="out-in"
+  <dialog
+    v-bind="$attrs"
+    ref="dialogRef"
+    class="py-4 m-auto bg-card rounded-xl shadow-card w-[calc(100%-2rem)] max-w-lg sm:w-full"
   >
-    <dialog v-bind="$attrs" ref="dialogRef" class="py-4 m-auto bg-card rounded-xl shadow-card w-[calc(100%-2rem)] max-w-lg sm:w-full">
-      <div class="flex flex-col">
-        <slot />
-      </div></dialog
-  ></Transition>
+    <div class="flex flex-col">
+      <slot />
+    </div>
+  </dialog>
 </template>
 
 <script setup>

@@ -68,26 +68,26 @@
             </p>
 
             <div class="flex gap-1">
-              <Button
+              <BaseButton
                 @click="emit('change-page', props.page - 1)"
                 class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
                 ><img :src="chevronLeft" alt=""
-              /></Button>
+              /></BaseButton>
 
-              <Button
+              <BaseButton
                 v-for="i in totalPages"
                 :key="i"
                 @click="emit('change-page', i - 1)"
                 class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
               >
-                {{ i }}</Button
+                {{ i }}</BaseButton
               >
 
-              <Button
+              <BaseButton
                 @click="emit('change-page', props.page + 1)"
                 class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
                 ><img :src="chevronRight" alt=""
-              /></Button>
+              /></BaseButton>
             </div>
           </div>
         </TableCell>
@@ -97,6 +97,7 @@
 </template>
 
 <script setup>
+import { BaseButton } from "@/shared/ui/components";
 import {
   Table,
   TableBody,
@@ -112,7 +113,7 @@ import ellipis from "@/shared/assets/icons/ellipis.svg";
 import trash from "@/shared/assets/icons/trash.svg";
 import chevronLeft from "@/shared/assets/icons/chevron-left.svg";
 import chevronRight from "@/shared/assets/icons/chevron-right.svg";
-import Button from "@/shared/ui/components/Button.vue";
+
 import { formatDate } from "@/shared/utils/formatDate";
 import { formatTime } from "@/shared/utils/formatTime";
 import { formatMoney } from "@/shared/utils/formatMoney";

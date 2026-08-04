@@ -3,7 +3,7 @@
     class="w-full bg-card h-12 border-b border-input sticky top-0 z-50 flex items-center justify-between gap-3 pr-3 pl-3"
   >
     <div class="flex items-center gap-3">
-      <Button
+      <BaseButton
         type="button"
         class="lg:hidden p-2 hover:bg-link rounded-xl transition-transform active:scale-75 duration-200 border-0 shadow-none"
         @click="emit('toggle-sidebar')"
@@ -12,7 +12,7 @@
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-      </Button>
+      </BaseButton>
 
       <h2 class="font-extrabold text-2xl italic shadow-sm border rounded-xl bg-link px-1">FINTRACK</h2>
     </div>
@@ -29,16 +29,17 @@
       />
       <div :class="changeClassMenuAvatar">
         <span class="text-sm font-semibold">{{ props.userName }}</span>
-        <Button @click="emit('log-out')" class="text-xs bg-link">Log out</Button>
+        <BaseButton @click="emit('log-out')" class="text-xs bg-link">Log out</BaseButton>
       </div>
     </div>
   </header>
 </template>
 
 <script setup>
+import { BaseButton } from "@/shared/ui/components";
 import bell from "@/shared/assets/icons/bell.svg";
 import avt from "@/shared/assets/icons/avt.jpg";
-import Button from "@/shared/ui/components/Button.vue";
+
 import { computed } from "vue";
 
 const props = defineProps({
