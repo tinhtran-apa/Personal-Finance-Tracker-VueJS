@@ -7,8 +7,8 @@
         <p class="text-neutral mt-2">Manage and organize your spending categories.</p>
       </div>
 
-      <div class="md:my-auto">
-        <BaseButton @click="emit('open-dialog-create')" class="w-full md:w-fit bg-primary text-white">
+      <div class="md:my-auto w-full md:w-fit">
+        <BaseButton @click="emit('open-dialog-create')" variant="primary">
           <img :src="plus" alt="" />
           Create Category
         </BaseButton>
@@ -19,12 +19,7 @@
 
       <div class="flex gap-2 items-center">
         <BaseLabel> Filter: </BaseLabel>
-        <BaseSelect v-model="type" @change="emit('filter-category-type')">
-          <option value="">All</option>
-          <option v-for="option in optionsType" :key="option.value" :value="option.value">
-            {{ option.label }}
-          </option>
-        </BaseSelect>
+        <BaseSelect v-model="type" :options="optionsType" placeholder="All" @change="emit('filter-category-type')" />
       </div>
     </div>
   </div>

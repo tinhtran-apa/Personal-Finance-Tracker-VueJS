@@ -33,7 +33,8 @@
               @click="selectIcon(ic.label)"
               v-for="ic in icons"
               :key="ic"
-              :class="checkClassIcon(forms.icon, ic.label)"
+              variant="icon"
+              :active="forms.icon === ic.label"
               type="button"
             >
               <img :src="ic.icon" alt="" />
@@ -47,28 +48,25 @@
           <BaseLabel for="type"> Type </BaseLabel>
 
           <div class="flex rounded-md bg-link p-1 gap-2">
-            <BaseButton @click="forms.type = 'EXPENSE'" :class="checkClassExpense(forms.type)" type="button">
+            <BaseButton @click="forms.type = 'EXPENSE'" variant="toggle" :active="forms.type === 'EXPENSE'" type="button">
               Expense
             </BaseButton>
 
-            <BaseButton @click="forms.type = 'INCOME'" :class="checkClassIncome(forms.type)" type="button"> Income </BaseButton>
+            <BaseButton @click="forms.type = 'INCOME'" variant="toggle" :active="forms.type === 'INCOME'" type="button"> Income </BaseButton>
           </div>
         </div>
       </DialogContent>
       <DialogFooter>
-        <BaseButton @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</BaseButton>
-        <BaseButton :disabled="props.loading" class="w-fit bg-primary text-white">Confirm</BaseButton>
+        <BaseButton @click="emit('close-dialog')" variant="secondary" type="button">Cancel</BaseButton>
+        <BaseButton :disabled="props.loading" variant="primary" type="submit">Confirm</BaseButton>
       </DialogFooter>
     </form>
   </Dialog>
 </template>
 
 <script setup>
-
 import { BaseButton, BaseInput, BaseLabel } from "@/shared/ui/components";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@/shared/ui/components/dialog";
-
-
 import stack from "@/shared/assets/icons/stack.svg";
 
 const props = defineProps({
@@ -100,18 +98,6 @@ const forms = defineModel({
 });
 
 const emit = defineEmits(["close-dialog", "submit", "clear-error"]);
-
-const checkClassIncome = (field) => {
-  return ["flex-1 rounded-md py-2 ", field === "INCOME" ? "bg-white shadow" : "bg-neutral-200"];
-};
-
-const checkClassExpense = (field) => {
-  return ["flex-1 rounded-md py-2 ", field === "EXPENSE" ? "bg-white shadow" : "bg-neutral-200"];
-};
-
-const checkClassIcon = (selectedIcon, icon) => {
-  return ["p-2 shadow-none border border-neutral hover:bg-link", selectedIcon === icon ? "bg-link" : ""];
-};
 
 const focusError = (field) => {
   return ["pr-3 pl-8", field ? "border-red-500 focus:border-red-500 focus:outline-none" : ""];

@@ -9,15 +9,14 @@
         <p class="text-red-500 text-sm">Are you sure to delete this transaction !!!</p>
       </DialogContent>
       <DialogFooter>
-        <BaseButton @click="emit('close-dialog')" class="w-fit border-neutral-400 border" type="button">Cancel</BaseButton>
-        <BaseButton :disabled="props.loading" class="w-fit bg-red-400 text-white">Confirm</BaseButton>
+        <BaseButton @click="emit('close-dialog')" variant="secondary" type="button">Cancel</BaseButton>
+        <BaseButton :disabled="props.loading" variant="danger" type="submit">Confirm</BaseButton>
       </DialogFooter>
     </form>
   </Dialog>
 </template>
 
 <script setup>
-
 import { BaseButton } from "@/shared/ui/components";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@/shared/ui/components/dialog";
 

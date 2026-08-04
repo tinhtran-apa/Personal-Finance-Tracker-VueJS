@@ -70,7 +70,8 @@
             <div class="flex gap-1">
               <BaseButton
                 @click="emit('change-page', props.page - 1)"
-                class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
+                variant="ghost"
+                size="icon"
                 ><img :src="chevronLeft" alt=""
               /></BaseButton>
 
@@ -78,14 +79,16 @@
                 v-for="i in totalPages"
                 :key="i"
                 @click="emit('change-page', i - 1)"
-                class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
+                variant="ghost"
+                size="icon"
               >
                 {{ i }}</BaseButton
               >
 
               <BaseButton
                 @click="emit('change-page', props.page + 1)"
-                class="py-2 px-2 bg-transparent shadow-none rounded-xl hover:bg-link"
+                variant="ghost"
+                size="icon"
                 ><img :src="chevronRight" alt=""
               /></BaseButton>
             </div>

@@ -7,8 +7,8 @@
         <p class="text-neutral mt-2">Review and manage your financial activity.</p>
       </div>
 
-      <div class="md:my-auto">
-        <BaseButton @click="emit('open-dialog-create')" class="w-full md:w-fit bg-primary text-white">
+      <div class="md:my-auto w-full md:w-fit">
+        <BaseButton @click="emit('open-dialog-create')" variant="primary">
           <img :src="plus" alt="" />
 
           Create Transaction
@@ -17,29 +17,19 @@
     </div>
 
     <div class="flex flex-col lg:flex-row justify-between gap-3 pt-4">
-      <BaseSearch
-        :disabled="allowInput"
-        @input="emit('search-transaction', $event.target.value)"
-        class="w-full lg:max-w-2xl"
-        :class="{ 'bg-neutral-200': allowInput }"
-        placeholder="Search transactions..."
-      />
+      <div class="w-full lg:max-w-2xl">
+        <BaseSearch
+          :disabled="allowInput"
+          @input="emit('search-transaction', $event.target.value)"
+          placeholder="Search transactions..."
+        />
+      </div>
 
       <div class="flex flex-col sm:flex-row gap-3">
         <div v-if="filter !== 'date'" class="flex items-center gap-2">
           <BaseLabel>Choose: </BaseLabel>
 
-          <BaseSelect v-model="filterValue" :disabled="checkChoose" :class="{ 'bg-neutral-200': checkChoose }">
-            <option value="">All</option>
-
-            <option v-if="filter === 'type'" v-for="option in optionsType" :key="option.value" :value="option.value">
-              {{ option.label }}
-            </option>
-
-            <option v-if="filter === 'categoryId'" v-for="category in categories" :key="category.id" :value="category.id">
-              {{ category.name }}
-            </option>
-          </BaseSelect>
+          <BaseSelect v-model="filterValue" :disabled="checkChoose" :options="chooseOptions" placeholder="All" />
         </div>
         <div v-else class="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
           <div class="flex gap-2 items-center">
@@ -57,13 +47,7 @@
         <div class="flex items-center gap-2">
           <BaseLabel>Filter: </BaseLabel>
 
-          <BaseSelect v-model="filter">
-            <option value="">All</option>
-
-            <option v-for="option in optionsFilter" :value="option.value">
-              {{ option.label }}
-            </option>
-          </BaseSelect>
+          <BaseSelect v-model="filter" :options="optionsFilter" placeholder="All" />
         </div>
       </div>
     </div>
@@ -95,6 +79,14 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+});
+
+const chooseOptions = computed(() => {
+  if (filter.value === "type") return props.optionsType;
+  if (filter.value === "categoryId") {
+    return props.categories.map((category) => ({ label: category.name, value: category.id }));
+  }
+  return [];
 });
 const filterValue = defineModel("filterValue", {
   type: String,

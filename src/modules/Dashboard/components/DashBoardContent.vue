@@ -47,11 +47,7 @@
     <BaseCard class="p-3 md:col-span-2">
       <div class="flex justify-between items-center flex-wrap gap-2">
         <p class="font-bold">Chart</p>
-        <BaseSelect class="w-fit" v-model="model" @change="emit('filter-by-year')">
-          <option v-for="year in years" :key="year" :value="year">
-            {{ year }}
-          </option>
-        </BaseSelect>
+        <BaseSelect class="w-fit" v-model="model" :options="years" @change="emit('filter-by-year')" />
       </div>
       <div>
         <slot name="Area" />
