@@ -1,5 +1,5 @@
 import BlankLayout from "@/layouts/BlankLayout.vue";
-import { ROUTES } from "../../../constants/routes";
+import { ROUTES } from "@/shared/constants/routes.contant.js";
 import LoginPage from "../views/LoginPage.vue";
 import RegisterPage from "../views/RegisterPage.vue";
 

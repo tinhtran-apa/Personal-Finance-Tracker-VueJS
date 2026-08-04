@@ -1,4 +1,4 @@
-import { PASSWORD_MIN_LENGTH} from "./validation";
+import { PASSWORD_MIN_LENGTH } from "./validation.contant";
 
 export const AUTH_MESSAGE = {
   NAME_REQUIRED: "Name is required.",

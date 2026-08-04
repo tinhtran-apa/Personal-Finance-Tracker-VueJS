@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth.store.js";
 import { validateLogin } from "../validators/auth.validate.js";
 import { toast } from "vue3-toastify";
-import { ROUTES } from "../../../constants/routes.js";
+import { ROUTES } from "@/shared/constants/routes.contant.js";
 
 export const useLogin = () => {
   const header = {

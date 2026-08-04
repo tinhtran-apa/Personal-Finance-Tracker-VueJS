@@ -1,5 +1,5 @@
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import { ROUTES } from "@/constants/routes.js";
+import { ROUTES } from "@/shared/constants/routes.contant.js";
 import DashboardPage from "../views/DashboardPage.vue";
 
 export default [

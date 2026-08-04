@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from "@/shared/constants/routes.contant.js";
 import transaction from "@/shared/assets/icons/transaction.svg";
 import category from "@/shared/assets/icons/category.svg";
 import dashboard from "@/shared/assets/icons/dashboard.svg";

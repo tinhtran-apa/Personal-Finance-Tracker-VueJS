@@ -1,4 +1,4 @@
-import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "@/constants/validation";
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "@/shared/constants/validation.contant.js";
 
 export const CATEGORY_MESSAGE = {
   NAME_REQUIRED: "Category name is required.",

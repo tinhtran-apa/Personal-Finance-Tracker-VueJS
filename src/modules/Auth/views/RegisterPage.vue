@@ -30,12 +30,11 @@
 </template>
 
 <script setup>
-
 import { BaseCard, BaseCheckBox } from "@/shared/ui/components";
 import AuthHeader from "../components/AuthHeader.vue";
 import AuthForm from "../components/AuthForm.vue";
 
-import { ROUTES } from "../../../constants/routes.js";
+import { ROUTES } from "@/shared/constants/routes.contant.js";
 import bank from "@/shared/assets/icons/bank.svg";
 import { useRegister } from "../composables/useRegister.js";
 

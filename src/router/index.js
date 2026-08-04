@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import authRoutes from "@/modules/Auth/routes/routes.js";
-import categoryRoutes from "@/modules/Category/routes/routes.js";
-import transactionRoutes from "@/modules/Transaction/routes/routes.js";
-import dashboardRoutes from "@/modules/Dashboard/routes/routes.js";
+import authRoutes from "@/modules/Auth/routes/auth.route.js";
+import categoryRoutes from "@/modules/Category/routes/category.routes.js";
+import transactionRoutes from "@/modules/Transaction/routes/dashboard.routes.js";
+import dashboardRoutes from "@/modules/Dashboard/routes/dashboard.routes.js";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import BlankLayout from "@/layouts/BlankLayout.vue";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from "@/shared/constants/routes.contant.js";
 import { useAuthStore } from "@/modules/Auth/stores/auth.store";
 const router = createRouter({
   history: createWebHistory(),

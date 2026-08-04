@@ -1,6 +1,6 @@
-import { TRANSACTION_MESSAGE } from "@/constants/transaction.message";
-import { DESCRIPTION_MAX_LENGTH, DESCRIPTION_MIN_LENGTH } from "@/constants/validation";
-import { greaterThan, required, size } from "@/shared/utils/rules";
+import { TRANSACTION_MESSAGE } from "@/shared/constants/transaction.message.js";
+import { DESCRIPTION_MAX_LENGTH, DESCRIPTION_MIN_LENGTH } from "@/shared/constants/validation.contant.js";
+import { greaterThan, required, size } from "@/shared/validators";
 
 export const validateCreateOrEditTransaction = (form) => {
   const errors = {};

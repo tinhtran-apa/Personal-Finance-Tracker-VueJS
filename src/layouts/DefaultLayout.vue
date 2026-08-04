@@ -5,7 +5,13 @@
     <div v-if="isSidebarOpen" class="fixed inset-0 bg-black/50 z-40 lg:hidden" @click="closeSidebar" />
 
     <div class="flex flex-1 flex-col min-w-0">
-      <Header @toggle-sidebar="toggleSidebar" @toggle-avatar="toggleMenuAvatar" @log-out="logOutUser" :open="open" :userName="authStore?.users?.fullName"/>
+      <Header
+        @toggle-sidebar="toggleSidebar"
+        @toggle-avatar="toggleMenuAvatar"
+        @log-out="logOutUser"
+        :open="open"
+        :userName="authStore?.users?.fullName"
+      />
 
       <main class="flex-1 bg-gradient-surface overflow-auto p-4 md:p-6 lg:p-10">
         <RouterView v-slot="{ Component }">
@@ -33,11 +39,10 @@ import Sidebar from "./components/SideBar.vue";
 import { ref } from "vue";
 import { useAuthStore } from "@/modules/Auth/stores/auth.store.js";
 import { toast } from "vue3-toastify";
-import { ROUTES } from "@/constants/routes.js";
+import { ROUTES } from "@/shared/constants/routes.contant.js";
 
 const isSidebarOpen = ref(false);
 const open = ref(false);
-
 
 const authStore = useAuthStore();
 

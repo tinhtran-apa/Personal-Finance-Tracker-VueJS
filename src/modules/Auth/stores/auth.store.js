@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { getCurrentUser, login, logout, refreshToken } from "../services/api/auth.service";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from "@/shared/constants/routes.contant.js";
 
 export const useAuthStore = defineStore("auth", {
   state: () => {
@@ -21,9 +21,9 @@ export const useAuthStore = defineStore("auth", {
         const user = await getCurrentUser();
         this.users = user.data;
         localStorage.setItem("users", JSON.stringify(this.users));
-        return accessToken.message
+        return accessToken.message;
       } catch (error) {
-        throw error
+        throw error;
       } finally {
         this.loading = false;
       }
@@ -44,7 +44,7 @@ export const useAuthStore = defineStore("auth", {
       try {
         const response = await logout();
         this.clearAuthData();
-        return response.message
+        return response.message;
       } catch (error) {
         throw error;
       }

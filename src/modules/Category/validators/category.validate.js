@@ -1,6 +1,6 @@
-import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "@/constants/validation";
-import { CATEGORY_MESSAGE } from "@/constants/category.message";
-import { required, size } from "@/shared/utils/rules";
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "@/shared/constants/validation.contant.js";
+import { CATEGORY_MESSAGE } from "@/shared/constants/category.message.js";
+import { required, size } from "@/shared/validators";
 
 export const validateCreateOrEditCategory = (form) => {
   const errors = {};

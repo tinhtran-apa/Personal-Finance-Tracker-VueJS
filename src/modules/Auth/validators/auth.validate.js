@@ -1,6 +1,6 @@
-import { AUTH_MESSAGE } from "@/constants/auth.message";
-import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
-import { accept, invalidEmail, match, required, size } from "@/shared/utils/rules";
+import { AUTH_MESSAGE } from "@/shared/constants/auth.message.js";
+import { PASSWORD_MIN_LENGTH } from "@/shared/constants/validation.contant.js";
+import { accept, invalidEmail, match, required, size } from "@/shared/validators";
 
 export const validateLogin = (form) => {
   const errors = {};
