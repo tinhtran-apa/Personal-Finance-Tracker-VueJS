@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { getCurrentUser, login, logout, refreshToken } from "../services/api/auth.service";
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 
 export const useAuthStore = defineStore("auth", {
   state: () => {
@@ -36,7 +36,7 @@ export const useAuthStore = defineStore("auth", {
         return newAccessToken.data.accessToken;
       } catch (error) {
         this.clearAuthData();
-        window.location.href = ROUTES.LOGIN;
+        window.location.href = PATH.LOGIN.href;
         throw error;
       }
     },

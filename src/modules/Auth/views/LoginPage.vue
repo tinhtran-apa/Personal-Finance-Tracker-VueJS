@@ -18,12 +18,12 @@
         <span class="text-neutral">Remember me</span>
       </div>
 
-      <RouterLink :to="ROUTES.FORGOT_PASSWORD" class="text-sm text-secondary"> Forgot your password? </RouterLink>
+      <RouterLink :to="PATH.FORGOT_PASSWORD.href" class="text-sm text-secondary"> Forgot your password? </RouterLink>
     </AuthForm>
 
     <span class="text-neutral self-center mt-3"
       >Don't have an account?
-      <RouterLink :to="ROUTES.REGISTER" class="text-primary font-semibold">Sign up</RouterLink></span
+      <RouterLink :to="PATH.REGISTER.href" class="text-primary font-semibold">Sign up</RouterLink></span
     >
   </BaseCard>
 </template>
@@ -32,7 +32,7 @@
 import { BaseCard, BaseCheckBox } from "@/shared/ui/components";
 import AuthForm from "../components/AuthForm.vue";
 
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 import bank from "@/shared/assets/icons/bank.svg";
 import AuthHeader from "../components/AuthHeader.vue";
 import { useLogin } from "../composables/useLogin.js";

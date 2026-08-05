@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import { register } from "../services/api/auth.service.js";
 import { validateRegister } from "../validators/auth.validate.js";
 import { toast } from "vue3-toastify";
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 
 export const useRegister = () => {
   const header = {
@@ -58,7 +58,7 @@ export const useRegister = () => {
       };
       const response = await register(payload);
       toast.success(response.message);
-      router.push(ROUTES.LOGIN);
+      router.push(PATH.LOGIN.href);
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {

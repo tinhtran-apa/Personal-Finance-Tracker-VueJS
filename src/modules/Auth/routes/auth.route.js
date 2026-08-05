@@ -1,17 +1,17 @@
 import BlankLayout from "@/layouts/BlankLayout.vue";
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 import LoginPage from "../views/LoginPage.vue";
 import RegisterPage from "../views/RegisterPage.vue";
 
 export default [
   {
-    path: ROUTES.LOGIN,
-    name: "login",
+    path: PATH.LOGIN.href,
+    name: PATH.LOGIN.name,
     component: LoginPage,
   },
   {
-    path: ROUTES.REGISTER,
-    name: "register",
+    path: PATH.REGISTER.href,
+    name: PATH.REGISTER.name,
     component: RegisterPage,
   },
 ];

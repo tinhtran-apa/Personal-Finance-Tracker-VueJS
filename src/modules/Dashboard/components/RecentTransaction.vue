@@ -6,7 +6,7 @@
           ><span class="font-bold text-lg">Recent transactions</span></TableCell
         >
         <TableCell :colspan="Number(props.heads.length / 2)" class="text-end"
-          ><RouterLink class="hover:font-bold text-xs" :to="ROUTES.TRANSACTIONS">View All</RouterLink></TableCell
+          ><RouterLink class="hover:font-bold text-xs" :to="PATH.TRANSACTIONS.href">View All</RouterLink></TableCell
         >
       </TableRow>
     </TableHeader>
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/components/table";
 import { formatDate } from "@/shared/utils/formatDate";
 import { formatMoney } from "@/shared/utils/formatMoney";

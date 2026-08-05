@@ -24,7 +24,7 @@
 
     <span class="text-neutral self-center mt-3"
       >Already have an account?
-      <RouterLink :to="ROUTES.LOGIN" class="text-primary font-semibold">Sign in</RouterLink></span
+      <RouterLink :to="PATH.LOGIN.href" class="text-primary font-semibold">Sign in</RouterLink></span
     >
   </BaseCard>
 </template>
@@ -34,7 +34,7 @@ import { BaseCard, BaseCheckBox } from "@/shared/ui/components";
 import AuthHeader from "../components/AuthHeader.vue";
 import AuthForm from "../components/AuthForm.vue";
 
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 import bank from "@/shared/assets/icons/bank.svg";
 import { useRegister } from "../composables/useRegister.js";
 

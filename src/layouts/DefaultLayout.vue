@@ -39,7 +39,7 @@ import Sidebar from "./components/SideBar.vue";
 import { ref } from "vue";
 import { useAuthStore } from "@/modules/Auth/stores/auth.store.js";
 import { toast } from "vue3-toastify";
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 
 const isSidebarOpen = ref(false);
 const open = ref(false);
@@ -64,7 +64,7 @@ const logOutUser = async () => {
   try {
     const response = await authStore.logOutUser();
     toast.success(response);
-    router.push(ROUTES.LOGIN);
+    router.push(PATH.LOGIN.href);
   } catch (error) {
     toast.error(error.response?.data?.message);
   }

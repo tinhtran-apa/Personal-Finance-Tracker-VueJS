@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth.store.js";
 import { validateLogin } from "../validators/auth.validate.js";
 import { toast } from "vue3-toastify";
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 
 export const useLogin = () => {
   const header = {
@@ -44,7 +44,7 @@ export const useLogin = () => {
       };
       const response = await userStore.loginUser(payload);
       toast.success(response);
-      router.push(ROUTES.DASHBOARD);
+      router.push(PATH.DASHBOARD.href);
     } catch (error) {
       toast.error(error.response?.data?.message);
     }

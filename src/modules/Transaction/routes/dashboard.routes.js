@@ -1,11 +1,11 @@
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 import TransactionPage from "../views/TransactionPage.vue";
 
 export default [
   {
-    path: ROUTES.TRANSACTIONS,
-    name: "transactions",
+    path: PATH.TRANSACTIONS.href,
+    name: PATH.TRANSACTIONS.name,
     component: TransactionPage,
   },
 ];

@@ -5,14 +5,14 @@ import transactionRoutes from "@/modules/Transaction/routes/dashboard.routes.js"
 import dashboardRoutes from "@/modules/Dashboard/routes/dashboard.routes.js";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import BlankLayout from "@/layouts/BlankLayout.vue";
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 import { useAuthStore } from "@/modules/Auth/stores/auth.store";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: "/",
-      redirect: ROUTES.LOGIN,
+      redirect: PATH.LOGIN.href,
     },
     {
       path: "/",
@@ -33,10 +33,10 @@ router.beforeEach((to) => {
   const userStore = useAuthStore();
   const isLoggedIn = !!userStore.accessToken;
   if (isLoggedIn && to.meta.guestOnly) {
-    return { path: ROUTES.DASHBOARD };
+    return { path: PATH.DASHBOARD.href };
   }
   if (!isLoggedIn && to.meta.requiresAuth) {
-    return { path: ROUTES.LOGIN };
+    return { path: PATH.LOGIN.href };
   }
 });
 export default router;

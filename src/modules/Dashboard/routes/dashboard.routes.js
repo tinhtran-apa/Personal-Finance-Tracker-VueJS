@@ -1,11 +1,11 @@
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 import DashboardPage from "../views/DashboardPage.vue";
 
 export default [
   {
-    path: ROUTES.DASHBOARD,
-    name: "dashboard",
+    path: PATH.DASHBOARD.href,
+    name: PATH.DASHBOARD.name,
     component: DashboardPage,
   },
 ];

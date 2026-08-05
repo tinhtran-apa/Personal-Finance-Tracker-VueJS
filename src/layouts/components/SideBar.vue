@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ROUTES } from "@/shared/constants/routes.contant.js";
+import { PATH } from "@/shared/constants/path.constant.js";
 import transaction from "@/shared/assets/icons/transaction.svg";
 import category from "@/shared/assets/icons/category.svg";
 import dashboard from "@/shared/assets/icons/dashboard.svg";
@@ -50,17 +50,17 @@ const emit = defineEmits(["close"]);
 const heads = [
   {
     title: "Dashboard",
-    path: ROUTES.DASHBOARD,
+    path: PATH.DASHBOARD.href,
     icon: dashboard,
   },
   {
     title: "Category",
-    path: ROUTES.CATEGORIES,
+    path: PATH.CATEGORIES.href,
     icon: category,
   },
   {
     title: "Transaction",
-    path: ROUTES.TRANSACTIONS,
+    path: PATH.TRANSACTIONS.href,
     icon: transaction,
   },
 ];
